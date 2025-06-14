@@ -1,21 +1,31 @@
 
 import { useParams, Link } from "react-router-dom";
 import { ArrowLeft, Star, MessageCircle } from "lucide-react";
+import { useEffect, useState } from "react";
+
+interface Item {
+  id: number;
+  name: string;
+  description: string;
+  information: string;
+  price: number;
+  image: string;
+}
+
+interface Review {
+  id: number;
+  name: string;
+  rating: number;
+  comment: string;
+  date: string;
+}
 
 const ItemPage = () => {
-  const { id } = useParams();
-  
-  // Sample item data - you can easily modify this for each new item
-  const item = {
-    id: parseInt(id || "1"),
-    name: "Sample",
-    description: "this item is a sample",
-    information: "this item is a sample, the item is a sample item, were testing the site so its a sample item",
-    price: 999,
-    image: "https://images.unsplash.com/photo-1745874864678-f464940bb513?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-  };
+  const { id } = useParams<{ id: string }>();
+  const [item, setItem] = useState<Item | null>(null);
 
-  const reviews = [
+  // This can also be fetched from a file or API
+  const reviews: Review[] = [
     {
       id: 1,
       name: "John D.",
@@ -39,10 +49,31 @@ const ItemPage = () => {
     }
   ];
 
+  useEffect(() => {
+    if (id) {
+      fetch("/items.json")
+        .then((res) => res.json())
+        .then((items: Item[]) => {
+          const foundItem = items.find((i) => i.id === parseInt(id));
+          setItem(foundItem || null);
+        })
+        .catch((err) => console.error("Failed to fetch item:", err));
+    }
+  }, [id]);
+
   const handleBuyClick = () => {
-    // Replace with your actual chat link
-    window.open('https://wa.me/1234567890?text=Hi, I am interested in buying the ' + item.name, '_blank');
+    if (item) {
+      window.open('https://wa.me/1234567890?text=Hi, I am interested in buying the ' + item.name, '_blank');
+    }
   };
+
+  if (!item) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        Loading...
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">

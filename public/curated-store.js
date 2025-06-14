@@ -1,61 +1,9 @@
-
 /**
  * Handles all curated store logic: category filtering, product rendering, search, and UI animations.
  */
 
 // ---- Data ----
-const products = [
-  {
-    id: 1,
-    name: "Sample 1",
-    description: "this item is a sample",
-    price: 999,
-    image:
-      "https://images.unsplash.com/photo-1745874864678-f464940bb513?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    link: "items/item1.html",
-    category: "1",
-  },
-  {
-    id: 2,
-    name: "Sample 2",
-    description: "this item is a sample",
-    price: 999,
-    image:
-      "https://images.unsplash.com/photo-1745874864678-f464940bb513?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    link: "items/item2.html",
-    category: "1",
-  },
-  {
-    id: 3,
-    name: "Sample 3",
-    description: "this item is a sample",
-    price: 999,
-    image:
-      "https://images.unsplash.com/photo-1745874864678-f464940bb513?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    link: "items/item3.html",
-    category: "1",
-  },
-  {
-    id: 4,
-    name: "Sample 4",
-    description: "this item is a sample",
-    price: 999,
-    image:
-      "https://images.unsplash.com/photo-1745874864678-f464940bb513?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    link: "items/item4.html",
-    category: "2",
-  },
-  {
-    id: 5,
-    name: "Sample 5",
-    description: "this item is a sample",
-    price: 999,
-    image:
-      "https://images.unsplash.com/photo-1745874864678-f464940bb513?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    link: "items/item5.html",
-    category: "2",
-  },
-];
+let products = [];
 
 // ---- State ----
 let currentCategory = "all";
@@ -202,7 +150,23 @@ function onSearchInput(e) {
 }
 
 // ---- Initialization ----
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
+  // Fetch products from JSON file
+  try {
+    const response = await fetch('/items.json');
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    products = await response.json();
+  } catch (e) {
+    console.error("Could not load products:", e);
+    const grid = productsGrid();
+    if(grid) {
+        grid.innerHTML = `<div class="text-red-500 text-center col-span-full">Failed to load products. Please try again later.</div>`;
+    }
+    return; // Stop execution if products can't be loaded
+  }
+
   // Animate elements on appear:
   setTimeout(() => {
     document.querySelectorAll("[data-animate]").forEach((el) => {

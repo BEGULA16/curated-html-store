@@ -1,44 +1,23 @@
-
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+
+interface Item {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  image: string;
+}
 
 const Index = () => {
-  const sampleItems = [
-    {
-      id: 1,
-      name: "Sample",
-      description: "this item is a sample",
-      price: 999,
-      image: "https://images.unsplash.com/photo-1745874864678-f464940bb513?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-    },
-    {
-      id: 2,
-      name: "Sample",
-      description: "this item is a sample",
-      price: 999,
-      image: "https://images.unsplash.com/photo-1745874864678-f464940bb513?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-    },
-    {
-      id: 3,
-      name: "Sample",
-      description: "this item is a sample",
-      price: 999,
-      image: "https://images.unsplash.com/photo-1745874864678-f464940bb513?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-    },
-    {
-      id: 4,
-      name: "Sample",
-      description: "this item is a sample",
-      price: 999,
-      image: "https://images.unsplash.com/photo-1745874864678-f464940bb513?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-    },
-    {
-      id: 5,
-      name: "Sample",
-      description: "this item is a sample",
-      price: 999,
-      image: "https://images.unsplash.com/photo-1745874864678-f464940bb513?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-    }
-  ];
+  const [items, setItems] = useState<Item[]>([]);
+
+  useEffect(() => {
+    fetch("/items.json")
+      .then((res) => res.json())
+      .then(setItems)
+      .catch((err) => console.error("Failed to fetch items:", err));
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
@@ -65,7 +44,7 @@ const Index = () => {
       {/* Products Grid */}
       <section className="container mx-auto px-4 pb-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {sampleItems.map((item) => (
+          {items.map((item) => (
             <Link 
               key={item.id} 
               to={`/item/${item.id}`}
