@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -167,24 +168,29 @@
         <h2 class="text-3xl md:text-5xl font-playfair font-bold gradient-text mb-6 animate-fade-in" data-animate>
             Discover <span class="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 to-blue-400">Amazing</span> Products
         </h2>
-        <div class="max-w-5xl mx-auto flex flex-col md:flex-row gap-6 md:gap-10 glass-card rounded-3xl overflow-hidden shadow-xl mb-12 animate-fade-in">
+        <div class="max-w-5xl mx-auto flex flex-col md:flex-row gap-4 md:gap-8 glass-card rounded-3xl overflow-hidden shadow-xl mb-12 animate-fade-in">
+
             <!-- Product Image -->
-            <div class="basis-1/2 p-0 pt-8 flex justify-center items-center sm:px-8 px-4">
+            <div class="basis-1/2 p-0 pt-8 flex justify-center items-start sm:px-8 px-0 md:pl-8 md:pr-0">
                 <div class="aspect-square w-full max-w-md bg-[#181927] rounded-2xl overflow-hidden shadow-lg">
                     <img src="https://images.unsplash.com/photo-1745874864678-f464940bb513?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
                          alt="Sample"
                          class="w-full h-full object-cover transition-transform duration-500 rounded-2xl hover:scale-105">
                 </div>
             </div>
+
             <!-- Product Details -->
-            <div class="basis-1/2 flex flex-col justify-center gap-7 pr-4 pl-0 pt-5 pb-8 sm:px-8 px-0 text-left">
-                <h1 class="text-4xl font-bold text-white mb-1 font-playfair text-left">Sample</h1>
-                <p class="text-lg text-cyan-200/85 mb-1 text-left">this item is a sample</p>
-                <div class="bg-[#1e1d2d]/70 rounded-xl p-5 mb-0 border border-[#2c2950]/60 shadow animate-fade-in" style="animation-delay:.05s">
+            <div class="basis-1/2 flex flex-col justify-start gap-7 pl-0 pr-0 md:pl-0 md:pr-8 pt-8 pb-8 sm:px-0 text-left
+                        items-start
+                        md:items-start
+                        ">
+                <h1 class="text-4xl font-bold text-white mb-1 font-playfair text-left w-full">Sample</h1>
+                <p class="text-lg text-cyan-200/85 mb-1 text-left w-full">this item is a sample</p>
+                <div class="bg-[#1e1d2d]/70 rounded-xl p-5 mb-0 border border-[#2c2950]/60 shadow animate-fade-in w-full" style="animation-delay:.05s">
                     <h3 class="text-base font-bold text-white mb-2 text-left">Product Information</h3>
                     <p class="text-cyan-100/80 leading-relaxed text-left">this item is a sample, the item is a sample item, were testing the site so its a sample item</p>
                 </div>
-                <div class="flex flex-wrap items-center justify-between gap-3 mb-2 pt-2">
+                <div class="flex flex-wrap items-center justify-between gap-3 mb-2 pt-2 w-full">
                     <span class="text-3xl md:text-4xl font-extrabold text-[#43ffae]">$999</span>
                     <div class="flex items-center text-yellow-400 gap-1">
                         <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
@@ -196,7 +202,7 @@
                     </div>
                 </div>
                 <button onclick="handleBuyClick()"
-                    class="btn-gradient text-white py-4 px-8 rounded-xl font-bold text-lg focus-visible:ring-2 ring-cyan-400 mb-2 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 shadow-lg">
+                    class="btn-gradient text-white py-4 px-8 rounded-xl font-bold text-lg focus-visible:ring-2 ring-cyan-400 mb-2 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 shadow-lg w-full">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <circle cx="12" cy="12" r="10" stroke="#fff" fill="none"></circle>
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01"></path>
