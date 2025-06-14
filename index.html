@@ -101,6 +101,9 @@
         <div class="absolute w-1/2 h-2/5 right-0 bottom-[-15%] ambient3"></div>
     </div>
 
+    <!-- Mobile Dropbox Overlay (hidden by default) -->
+    <div id="mobile-navbar-dropbox-overlay" class="hidden fixed inset-0 z-[100] bg-black/50" style="backdrop-filter: blur(1.5px);"></div>
+
     <!-- Navigation Bar -->
     <nav class="flex items-center justify-between bg-white/5 shadow-lg px-4 py-4 rounded-b-2xl relative z-50" style="backdrop-filter: blur(9px); border-bottom: 1px solid #24245f;">
         <span class="font-playfair text-2xl md:text-3xl font-extrabold gradient-text drop-shadow-sm select-none tracking-tight animate-fade-in">
@@ -133,14 +136,17 @@
           document.addEventListener("DOMContentLoaded", function(){
             const dropboxToggle = document.getElementById('mobile-navbar-dropbox-toggle');
             const dropboxMenu = document.getElementById('mobile-navbar-dropbox-menu');
+            const overlay = document.getElementById('mobile-navbar-dropbox-overlay');
             let isOpen = false;
             function closeMenu() {
               dropboxMenu.classList.add('hidden');
+              overlay.classList.add('hidden');
               isOpen = false;
               document.body.style.overflow = "";
             }
             function openMenu() {
               dropboxMenu.classList.remove('hidden');
+              overlay.classList.remove('hidden');
               isOpen = true;
               document.body.style.overflow = "hidden";
             }
@@ -152,11 +158,14 @@
                 openMenu();
               }
             });
-            // Close on clicking away
+            // Close on clicking away or overlay
             document.addEventListener('click', function(e) {
               if(isOpen && dropboxMenu && !dropboxMenu.contains(e.target) && e.target !== dropboxToggle){
                 closeMenu();
               }
+            });
+            overlay && overlay.addEventListener('click', function(e){
+              closeMenu();
             });
             // Close on escape
             document.addEventListener('keydown', function(e){
@@ -388,5 +397,3 @@
       filterProducts();
     })();
     </script>
-</body>
-</html>
