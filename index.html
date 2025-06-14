@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,172 +13,149 @@
             height: 100%;
             overflow-x: hidden;
         }
+        body {
+            background: #000;
+        }
         .gradient-text {
-            background: linear-gradient(to right, #2563eb, #9333ea);
+            background: linear-gradient(to right, #7f1dff 40%, #41d1ff 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        /* Floating decorative circles */
         .floating-bg {
             position: absolute;
             border-radius: 50%;
             filter: blur(40px);
-            opacity: 0.3;
+            opacity: 0.42;
             z-index: 0;
             pointer-events: none;
             animation: float 10s ease-in-out infinite alternate;
+            background: radial-gradient(circle at 70% 40%, #0ea5e9 0%, #7f1dff 100%);
+        }
+        .dark-ambient1 {
+            background: radial-gradient(circle at 10% 30%, #6d28d926 0%, #6d28d900 80%);
+        }
+        .dark-ambient2 {
+            background: radial-gradient(circle at 70% 50%, #0ea5e993 0%, #9333ea00 75%);
+        }
+        .dark-ambient3 {
+            background: radial-gradient(circle at 80% 120%, #8338ec66 0%, #00000000 90%);
         }
         @keyframes float {
             0% { transform: translateY(0) scale(1);}
             100% {transform: translateY(35px) scale(1.08);}
         }
-        /* Card entrance animation */
-        @keyframes cardFadeIn {
-            0% { opacity: 0; transform: translateY(30px) scale(0.96);}
-            100% { opacity: 1; transform: translateY(0) scale(1);}
-        }
-        .animate-card {
-            opacity: 0;
-            animation: cardFadeIn 0.8s cubic-bezier(.39,.575,.565,1) forwards;
-        }
-        /* Sequential stagger */
-        .card-delay-1 {animation-delay: 0.12s;}
-        .card-delay-2 {animation-delay: 0.24s;}
-        .card-delay-3 {animation-delay: 0.36s;}
-        .card-delay-4 {animation-delay: 0.48s;}
-        .card-delay-5 {animation-delay: 0.60s;}
-        /* Animated gradient for header underline */
-        .header-underline {
-            width: 112px;
-            height: 5px;
-            margin: 0.5rem auto 0;
-            background: linear-gradient(90deg,#6366f1, #e879f9,#22d3ee);
+        .category-btn {
+            border: 2px solid #24243e;
+            background: #0e0e17;
+            color: #6ee7b7;
+            margin-right: 1rem;
+            margin-bottom: 0.5rem;
+            box-shadow: 0 4px 32px #22d3ee25, 0 1px 8px #0ea5e970;
             border-radius: 9999px;
-            animation: gradient-underline 3s linear infinite alternate;
+            font-weight: 600;
+            padding: 0.6em 2em;
+            font-size: 1rem;
+            transition: background 0.2s, color 0.2s, border 0.2s, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
         }
-        @keyframes gradient-underline {
-            0% {background-position: 0 50%;}
-            100%{background-position: 200% 50%;}
+        .category-btn::before {
+            content: "";
+            position: absolute;
+            left: 50%; top: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 200%;
+            height: 200%;
+            border-radius: 50%;
+            background: radial-gradient(circle, #0ee7ff33 0%, #7f1dff44 100%);
+            opacity: 0.3;
+            transition: transform 0.35s, opacity 0.2s;
+            z-index: 1;
         }
-        /* Pulse effect for call to action */
-        .pulse {
-            animation: pulseGlow 2.2s cubic-bezier(.4,0,.6,1) infinite;
+        .category-btn:hover::before,
+        .category-btn:focus-visible::before {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
         }
-        @keyframes pulseGlow {
-            0%,100% {box-shadow: 0 0 0 px #9333ea55;}
-            60% {box-shadow: 0 0 30px 8px #9333ea55;}
+        .category-btn.selected, .category-btn:active {
+            background: linear-gradient(90deg,#41d1ff 60%,#a21caf 100%);
+            color: #fff;
+            border-color: #7f1dff;
+            box-shadow: 0 4px 34px #9333ea55, 0 0px 16px #22d3ee60;
         }
-        /* Update hover-scale for more pop */
-        .hover-scale {
-            transition: transform .23s cubic-bezier(.22,.61,.36,1), box-shadow .21s cubic-bezier(.13,1,.46,.93);
+        .category-btn.selected {
+            font-size: 1.05rem;
+            letter-spacing: 0.5px;
         }
-        .hover-scale:hover, .hover-scale:focus-visible {
-            transform: scale(1.07) translateY(-8px) rotate(-1.1deg);
-            box-shadow: 0 10px 28px 0 rgba(102,51,204,0.15), 0 2px 8px #a78bfa38;
+        /* Product Card enhanced hover */
+        .product-card {
+            transition: transform .21s cubic-bezier(.22,.61,.36,1), box-shadow .25s cubic-bezier(.13,1,.46,.93), border-color .14s;
+            background: #13131e;
+            border: 1.5px solid #1e293b88;
+            box-shadow: 0 6px 38px #0ea5e933, 0 2px 14px #7f1dff20;
+        }
+        .product-card:hover,
+        .product-card:focus-visible {
+            transform: scale(1.039) translateY(-8px) rotate(-1.1deg);
+            box-shadow: 0 12px 44px 0 #22d3ee44, 0 3px 16px #9333ea55;
             z-index: 2;
-            border-color: #9333ea22;
-        }
-        .hover-scale:active {
-            transform: scale(1.03);
+            border-color: #9333ea88;
         }
         .group:hover .card-btn,
         .group:focus-visible .card-btn {
-            filter: brightness(1.18) drop-shadow(0 2px 8px #93c5fd60);
+            filter: brightness(1.24) drop-shadow(0 2px 18px #9333ea70);
             background: linear-gradient(90deg, #6366f1 60%,#9333ea 100%);
             color: #fff;
         }
-        /* Add enhanced nav link and card animation */
-        .nav-anim-link {
-            position: relative;
-            transition: color 0.23s, filter 0.16s, transform 0.28s cubic-bezier(.16,1,.24,1);
-        }
-        .nav-anim-link::after {
-            content: '';
-            display: block;
-            height: 2px;
-            width: 100%;
-            background: linear-gradient(90deg, #6366f1, #9333ea);
-            transform: scaleX(0);
-            transition: transform 0.26s cubic-bezier(.4,0,.2,1);
-            transform-origin: left;
-            position: absolute;
-            left: 0;
-            bottom: -2px;
-            border-radius: 5px;
-        }
-        .nav-anim-link:hover,
-        .nav-anim-link:focus-visible {
-            color: #9333ea;
-            /* Filter for a slight glow */
-            filter: drop-shadow(0 1px 6px #9333ea44);
-            transform: translateY(-2px) scale(1.06);
-        }
-        .nav-anim-link:hover::after,
-        .nav-anim-link:focus-visible::after {
-            transform: scaleX(1);
-        }
-        .category-btn {
-            @apply px-5 py-2 rounded-full text-base font-semibold border transition-all duration-200 focus-visible:ring-2 ring-indigo-300;
-            border: 2px solid #d1d5db;
-            background: white;
-            color: #6366f1;
-            margin-right: 1rem;
-            margin-bottom: 0.5rem;
-            box-shadow: 0 4px 16px #bfaeff14;
-        }
-        .category-btn.selected, .category-btn:active {
-            background: linear-gradient(94deg,#6366f1 60%,#9333ea 100%);
-            color: #fff;
-            border-color: #9333ea;
-            box-shadow: 0 4px 28px #a890ff31;
-        }
     </style>
 </head>
-<body class="relative min-h-screen bg-gradient-to-br from-slate-50 to-slate-200">
-    
-    <!-- Decorative, animated floating background shapes -->
-    <div class="floating-bg" style="width:180px;height:180px;top:60px;left:-80px;background:radial-gradient(circle at 70% 40%,#7c3aed 80%, #2563eb 100%);"></div>
-    <div class="floating-bg" style="width:90px;height:90px;top:280px;right:44px;background:radial-gradient(circle at 50% 50%,#22d3ee 55%,#dbeafe 90%);animation-delay: 3s;"></div>
-    <div class="floating-bg" style="width:88px;height:88px;top:70%;left:65%;background:radial-gradient(circle at 70% 40%,#9333ea 70%,#beefff 100%);animation-delay:7s;"></div>
+<body class="relative min-h-screen bg-black">
+    <!-- Ambient glowing backgrounds for dark mode -->
+    <div class="fixed top-0 left-0 w-full h-full z-0 pointer-events-none">
+        <div class="absolute w-2/3 h-1/3 left-0 top-0 dark-ambient1"></div>
+        <div class="absolute w-2/3 h-2/5 right-0 top-1/3 dark-ambient2"></div>
+        <div class="absolute w-1/2 h-2/5 right-0 bottom-[-15%] dark-ambient3"></div>
+    </div>
 
-    <!-- Animated Navigation Bar -->
-    <nav class="flex items-center justify-between bg-white/95 shadow-lg px-4 py-4 rounded-b-2xl relative z-50 animate-fade-in" style="animation-delay:.04s; transition: box-shadow 0.22s cubic-bezier(.36,.14,.34,1);">
-        <span class="flex items-center gap-2 font-playfair text-2xl md:text-3xl font-bold gradient-text drop-shadow-sm">
+    <!-- Navigation Bar -->
+    <nav class="flex items-center justify-between bg-white/5 shadow-lg px-4 py-4 rounded-b-2xl relative z-50" style="backdrop-filter: blur(8px); border-bottom: 1px solid #232347; animation-delay:.04s;">
+        <span class="flex items-center gap-2 font-playfair text-2xl md:text-3xl font-bold gradient-text drop-shadow-sm select-none">
             <img src="https://www.svgrepo.com/show/480260/store.svg" alt="Curated Store Logo" class="inline w-7 h-7 -mt-1 drop-shadow-bright" style="display:inline;">
             Curated Store
         </span>
         <button class="nav-toggle" aria-label="Open navigation" onclick="document.querySelector('.navbar-links').classList.toggle('open')">
             <!-- hamburger icon -->
-            <svg width="30" height="30" fill="none" stroke="currentColor">
-                <rect y="8" width="30" height="3" rx="1.4" fill="currentColor"></rect>
-                <rect y="18" width="30" height="3" rx="1.4" fill="currentColor"></rect>
+            <svg width="30" height="30" fill="none" stroke="#93c5fd">
+                <rect y="8" width="30" height="3" rx="1.4" fill="#93c5fd"></rect>
+                <rect y="18" width="30" height="3" rx="1.4" fill="#93c5fd"></rect>
             </svg>
         </button>
         <div class="flex gap-7 items-center text-lg font-medium navbar-links">
-            <a href="/" class="text-gray-700 hover:gradient-text px-1.5 py-0.5 transition-all relative font-medium active:gradient-text font-bold">Home</a>
-            <a href="#products" class="text-gray-700 hover:gradient-text px-1.5 py-0.5 transition-all relative font-medium">Products</a>
-            <a href="mailto:info@curatedstore.com" class="bg-gradient-to-r from-blue-600 to-fuchsia-600 text-white font-semibold rounded-full shadow-lg px-5 py-2 text-base transition-transform hover:scale-105 focus-visible:ring-2 ring-fuchsia-300 ml-3">Contact Us</a>
+            <a href="/" class="text-white/90 hover:gradient-text px-1.5 py-0.5 transition-all relative font-medium active:gradient-text font-bold">Home</a>
+            <a href="#products" class="text-white/80 hover:gradient-text px-1.5 py-0.5 transition-all relative font-medium">Products</a>
+            <a href="mailto:info@curatedstore.com" class="bg-gradient-to-r from-blue-600 to-fuchsia-600 text-white font-semibold rounded-full shadow-2xl px-5 py-2 text-base transition-transform hover:scale-105 focus-visible:ring-2 ring-fuchsia-300 ml-3">Contact Us</a>
         </div>
     </nav>
+
     <!-- Hero Section -->
     <section class="container mx-auto px-4 pt-16 pb-14 text-center relative z-10">
-        <h2 class="text-3xl md:text-5xl font-playfair font-bold text-slate-800 mb-6 gradient-text animate-fade-in" style="animation: fade-in 1s cubic-bezier(.16,1,.3,1) both;">
-            Discover <span class="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 to-blue-600">Amazing</span> Products
+        <h2 class="text-3xl md:text-5xl font-playfair font-bold gradient-text mb-6 animate-fade-in" style="animation: fade-in 1s cubic-bezier(.16,1,.3,1) both;">
+            Discover <span class="text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-400 to-blue-400">Amazing</span> Products
         </h2>
-        <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto mb-10 md:mb-12 animate-fade-in" style="animation: fade-in 1.2s .2s both;">
-            <span class="inline-block rounded-lg bg-white/80 px-4 py-2 shadow backdrop-blur-sm border border-slate-100">Carefully curated items that meet our highest standards of quality and design</span>
+        <p class="text-lg md:text-xl text-slate-200/80 max-w-2xl mx-auto mb-10 md:mb-12 animate-fade-in" style="animation: fade-in 1.2s .2s both;">
+            <span class="inline-block rounded-lg bg-black/60 px-4 py-2 shadow backdrop-blur-sm border border-violet-900/40 text-slate-300">Carefully curated items that meet our highest standards of quality and design</span>
         </p>
     </section>
 
-    <!-- Category Selection Bar (Add ALL category) -->
+    <!-- Category Selection Bar (ALL, Category 1, Category 2) -->
     <section class="container mx-auto px-4 pb-4 flex justify-center select-none" id="category-bar">
         <button class="category-btn selected" data-category="all" id="cat-btn-all" type="button">ALL</button>
         <button class="category-btn" data-category="1" id="cat-btn-1" type="button">Category 1</button>
         <button class="category-btn" data-category="2" id="cat-btn-2" type="button">Category 2</button>
     </section>
 
-    <!-- Products Grid (with grouping under ALL) -->
+    <!-- Products Grid Grouped by Category when ALL is selected -->
     <section id="products" class="container mx-auto px-4 pb-20 relative z-10">
         <div id="products-grid">
             <!-- Will be filled by JS! -->
@@ -185,9 +163,9 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-12 mt-8 relative z-10">
+    <footer class="bg-black border-t-[1.5px] border-indigo-900/30 text-white py-12 mt-8 relative z-10 shadow-inner shadow-blue-900/[.10]">
         <div class="container mx-auto px-4 text-center">
-            <h3 class="text-2xl font-bold mb-4">Curated Store</h3>
+            <h3 class="text-2xl font-bold mb-4 gradient-text">Curated Store</h3>
             <p class="text-gray-400 mb-6">Your trusted source for premium products</p>
             <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6 mb-6">
                 <a href="#" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a>
@@ -198,8 +176,7 @@
         </div>
     </footer>
     <script>
-        // PRODUCT DATA
-        // match "Sample 1" to category 1, etc
+        // PRODUCT DATA (category grouping)
         const products = [
             {
                 id: 1,
@@ -254,7 +231,7 @@
             grid.innerHTML = '';
 
             if (category === 'all') {
-                // Show both categories with heading
+                // Group by cat, show under label
                 const grouped = {
                     "1": products.filter(p => p.category === "1"),
                     "2": products.filter(p => p.category === "2"),
@@ -264,7 +241,7 @@
                     // Category heading
                     const label = document.createElement("h4");
                     label.textContent = cat === "1" ? "Category 1" : "Category 2";
-                    label.className = "text-2xl font-bold mt-10 mb-4 text-slate-700 gradient-text";
+                    label.className = "text-2xl font-bold mt-10 mb-4 gradient-text";
                     grid.appendChild(label);
 
                     // Product grid
@@ -289,25 +266,19 @@
         function createProductCard(prod) {
             const a = document.createElement('a');
             a.href = prod.link;
-            a.className = `group product-card bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl hover-scale animate-card focus-visible:outline-fuchsia-400 transition-all duration-300 transform hover:-translate-y-2 hover:scale-105`;
+            a.className = `group product-card rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl focus-visible:outline-fuchsia-400 transition-all duration-300 transform hover:-translate-y-2 hover:scale-105`;
             a.setAttribute('data-category', prod.category);
 
             a.innerHTML = `
-                <div class="aspect-square overflow-hidden">
-                    <img src="${prod.image}" alt="${prod.name}" class="w-full h-full object-cover transition-transform duration-300 rounded-2xl group-hover:scale-110 group-hover:rotate-1">
+                <div class="aspect-square overflow-hidden bg-[#090912] border-b-[1.2px] border-[#222143]">
+                    <img src="${prod.image}" alt="${prod.name}" class="w-full h-full object-cover transition-transform duration-300 rounded-2xl group-hover:scale-110 group-hover:rotate-1" />
                 </div>
                 <div class="p-6">
-                    <h3 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-purple-700 transition-colors font-playfair">
-                        ${prod.name}
-                    </h3>
-                    <p class="text-gray-600 mb-4 line-clamp-2">
-                        ${prod.description}
-                    </p>
+                    <h3 class="text-xl font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors font-playfair">${prod.name}</h3>
+                    <p class="text-slate-300 mb-4 line-clamp-2">${prod.description}</p>
                     <div class="flex justify-between items-center">
-                        <span class="text-2xl font-bold text-green-600">
-                            $${prod.price}
-                        </span>
-                        <span class="card-btn bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium shadow transition-all group-hover:bg-blue-500 group-hover:text-white">View Details</span>
+                        <span class="text-2xl font-bold text-[#43ffae]">$${prod.price}</span>
+                        <span class="card-btn bg-[#111] border border-cyan-700 text-cyan-400 px-3 py-1 rounded-full text-sm font-medium shadow transition-all group-hover:bg-cyan-500 group-hover:text-[#fff]">View Details</span>
                     </div>
                 </div>
             `;
@@ -324,10 +295,6 @@
 
         // Initial load
         document.addEventListener('DOMContentLoaded', function () {
-            // Animate in
-            document.querySelectorAll('.animate-card').forEach(el => {
-                el.style.opacity = "0";
-            });
             setTimeout(() => {
                 document.querySelectorAll('.animate-card').forEach(el => {
                     el.style.opacity = "";
