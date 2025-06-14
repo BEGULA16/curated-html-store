@@ -34,6 +34,20 @@
             100%{opacity:1;transform:translateY(0);}
         }
         .animate-fade-in { animation: fade-in 0.7s cubic-bezier(.19,1,.39,.98) both; }
+        .animate-scale-fade-in {
+            animation: scale-fade-in 0.32s cubic-bezier(.19,1,.39,.98) both;
+        }
+        .animate-scale-fade-out {
+            animation: scale-fade-out 0.19s cubic-bezier(.66,0,.34,1) both;
+        }
+        @keyframes scale-fade-in {
+            from { opacity: 0; transform: scale(0.97) translateY(16px);}
+            to { opacity: 1; transform: scale(1) translateY(0);}
+        }
+        @keyframes scale-fade-out {
+            from { opacity: 1; transform: scale(1) translateY(0);}
+            to { opacity: 0; transform: scale(0.97) translateY(16px);}
+        }
         /* Card/Glass effect for product box */
         .glass-card {
             background: linear-gradient(135deg, #18182b44 80%, #2e254d13 100%);
@@ -78,8 +92,8 @@
         <div class="absolute w-1/2 h-2/5 right-0 bottom-[-15%] ambient3"></div>
     </div>
 
-    <!-- Mobile Dropbox Overlay (hidden by default) -->
-    <div id="mobile-navbar-dropbox-overlay" class="hidden fixed inset-0 z-[100] bg-black/50" style="backdrop-filter: blur(1.5px);"></div>
+    <!-- Overlay for Mobile Dropbox Navigation (initially hidden) -->
+    <div id="mobile-navbar-dropbox-overlay" class="fixed inset-0 z-[100] bg-black/50 pointer-events-none transition-opacity duration-200 opacity-0" style="backdrop-filter: blur(1.5px);"></div>
 
     <!-- Navigation Bar START -->
     <nav class="flex items-center justify-between bg-white/5 shadow-lg px-4 py-4 rounded-b-2xl relative z-50" style="backdrop-filter: blur(9px); border-bottom: 1px solid #24245f;">
@@ -89,13 +103,12 @@
         <!-- Mobile Dropdown Dropbox menu button (only on mobile, replaces hamburger) -->
         <div class="md:hidden relative ml-auto z-[101]">
             <button id="mobile-navbar-dropbox-toggle" class="text-cyan-200 hover:text-cyan-400 focus:outline-none px-2 py-2 rounded-lg transition" aria-label="Open navigation">
-                <!-- Lucide "chevron-down" icon for dropbox effect -->
                 <svg width="34" height="34" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24">
                     <circle cx="12" cy="12" r="10" stroke="#41d1ff" stroke-width="1.9" fill="#101026"/>
                     <polyline points="8,10 12,14 16,10" stroke="#41d1ff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </button>
-            <div id="mobile-navbar-dropbox-menu" class="hidden absolute right-0 mt-2 w-48 rounded-xl bg-[#181854] bg-opacity-95 shadow-2xl border border-[#232347] py-2 z-[111] animate-scale-in">
+            <div id="mobile-navbar-dropbox-menu" class="hidden absolute right-0 mt-2 w-48 rounded-xl bg-[#181854] bg-opacity-95 shadow-2xl border border-[#232347] py-2 z-[111]">
                 <a href="../index.html" class="block px-6 py-3 font-bold text-lg text-white transition hover:bg-cyan-700/60 rounded-lg">Home</a>
                 <a href="#reviews" class="block px-6 py-3 font-bold text-lg text-white transition hover:bg-cyan-700/60 rounded-lg">Reviews</a>
                 <a href="mailto:info@curatedstore.com" class="block px-6 py-3 font-bold text-lg bg-gradient-to-r from-fuchsia-300 to-cyan-400 text-white hover:text-white transition rounded-lg">Contact Us</a>
@@ -108,21 +121,32 @@
             <a href="mailto:info@curatedstore.com" class="bg-gradient-to-r from-blue-600 to-fuchsia-600 text-white font-semibold rounded-full shadow-2xl px-5 py-2 text-base transition-transform hover:scale-105 focus-visible:ring-2 ring-fuchsia-300 ml-3">Contact Us</a>
         </div>
         <script>
-            // Dropbox logic for mobile nav (copied and adapted from index.html)
             document.addEventListener("DOMContentLoaded", function(){
                 const dropboxToggle = document.getElementById('mobile-navbar-dropbox-toggle');
                 const dropboxMenu = document.getElementById('mobile-navbar-dropbox-menu');
                 const overlay = document.getElementById('mobile-navbar-dropbox-overlay');
                 let isOpen = false;
+
                 function closeMenu() {
-                    dropboxMenu.classList.add('hidden');
-                    overlay.classList.add('hidden');
-                    isOpen = false;
-                    document.body.style.overflow = "";
+                    if (!isOpen) return;
+                    // Animate menu out, then hide
+                    dropboxMenu.classList.remove('animate-scale-fade-in');
+                    dropboxMenu.classList.add('animate-scale-fade-out');
+                    overlay.classList.remove('opacity-100', 'pointer-events-auto');
+                    overlay.classList.add('opacity-0', 'pointer-events-none');
+                    setTimeout(() => {
+                        dropboxMenu.classList.add('hidden');
+                        dropboxMenu.classList.remove('animate-scale-fade-out');
+                        isOpen = false;
+                        document.body.style.overflow = "";
+                    }, 180);
                 }
                 function openMenu() {
-                    dropboxMenu.classList.remove('hidden');
-                    overlay.classList.remove('hidden');
+                    if (isOpen) return;
+                    dropboxMenu.classList.remove('hidden', 'animate-scale-fade-out');
+                    dropboxMenu.classList.add('animate-scale-fade-in');
+                    overlay.classList.remove('opacity-0', 'pointer-events-none');
+                    overlay.classList.add('opacity-100', 'pointer-events-auto');
                     isOpen = true;
                     document.body.style.overflow = "hidden";
                 }
@@ -134,19 +158,26 @@
                         openMenu();
                     }
                 });
-                // Close on clicking away or on overlay
+                // Overlay click closes menu
+                overlay && overlay.addEventListener('click', function(e){
+                    closeMenu();
+                });
+                // Clicking outside closes menu
                 document.addEventListener('click', function(e) {
                     if(isOpen && dropboxMenu && !dropboxMenu.contains(e.target) && e.target !== dropboxToggle){
                         closeMenu();
                     }
                 });
-                overlay && overlay.addEventListener('click', function(e){
-                    closeMenu();
-                });
-                // Close on escape
+                // Keyboard esc closes menu
                 document.addEventListener('keydown', function(e){
                     if(e.key === 'Escape' && isOpen){
                         closeMenu();
+                    }
+                });
+                // Remove animation classes after fully opened
+                dropboxMenu && dropboxMenu.addEventListener('animationend', function(e){
+                    if(e.animationName === 'scale-fade-in'){
+                        dropboxMenu.classList.remove('animate-scale-fade-in');
                     }
                 });
             });
