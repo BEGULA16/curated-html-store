@@ -430,60 +430,53 @@
 
     <!-- THEME SWITCHER & AMBIENT LIGHT LOGIC -->
     <script>
-        // Set or remove dark classes to body and ambient backgrounds
-        function setAmbientLightTheme(theme) {
-            var ambientBg = document.getElementById('ambient-backgrounds');
-            if (!ambientBg) return;
-            if (theme === "light") {
-                document.body.classList.remove('dark');
-                document.body.classList.add('light');
-                ambientBg.classList.remove('dark-ambient');
-            } else {
-                document.body.classList.remove('light');
-                document.body.classList.add('dark');
-                ambientBg.classList.add('dark-ambient');
-            }
+      function setTheme(theme, persist = true) {
+        const body = document.body;
+        const ambientBg = document.getElementById('ambient-backgrounds');
+        // Remove both classes to reset state
+        body.classList.remove('dark', 'light');
+        if (theme === "dark") {
+          body.classList.add('dark');
+          ambientBg.classList.add('dark-ambient');
+        } else {
+          body.classList.add('light');
+          ambientBg.classList.remove('dark-ambient');
         }
-        function setTheme(theme, persist = true) {
-            if (theme === "dark") {
-                setAmbientLightTheme("dark");
-            } else {
-                setAmbientLightTheme("light");
-            }
-            // Animated icon (Sun/Moon)
-            const sunIcon = `<circle cx="12" cy="12" r="5" stroke="currentColor"></circle>
-                <path d="M12 1v2m0 18v2m11-11h-2M3 12H1m16.95 7.07l-1.41-1.41M6.34 6.34 4.93 4.93m12.02 0-1.41 1.41M6.34 17.66l-1.41 1.41" stroke="currentColor"></path>`;
-            const moonIcon = `<path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"></path>`;
-            document.getElementById('theme-switch-mobile-icon').innerHTML = theme === "dark" ? moonIcon : sunIcon;
-            document.getElementById('theme-switch-desktop-icon').innerHTML = theme === "dark" ? moonIcon : sunIcon;
-            if (persist) localStorage.setItem('curated-theme', theme);
-        }
-        function getPreferredTheme() {
-            // Saved choice > browser preference > default light
-            const stored = localStorage.getItem('curated-theme');
-            if (stored === "dark" || stored === "light") return stored;
-            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) return "dark";
-            return "light";
-        }
-        function toggleTheme() {
-            const current = document.body.classList.contains("dark") ? "dark" : "light";
-            setTheme(current === "dark" ? "light" : "dark");
-        }
-        // Setup on DOM load
-        document.addEventListener("DOMContentLoaded", function(){
-            setTheme(getPreferredTheme(), false);
-            document.getElementById('theme-switch-mobile').onclick = toggleTheme;
-            document.getElementById('theme-switch-desktop').onclick = toggleTheme;
-        });
+        // Update switch icons
+        const sunIcon = `<circle cx="12" cy="12" r="5" stroke="currentColor"></circle>
+              <path d="M12 1v2m0 18v2m11-11h-2M3 12H1m16.95 7.07l-1.41-1.41M6.34 6.34 4.93 4.93m12.02 0-1.41 1.41M6.34 17.66l-1.41 1.41" stroke="currentColor"></path>`;
+        const moonIcon = `<path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"></path>`;
+        const mobileIcon = document.getElementById('theme-switch-mobile-icon');
+        const desktopIcon = document.getElementById('theme-switch-desktop-icon');
+        if (mobileIcon) mobileIcon.innerHTML = theme === "dark" ? moonIcon : sunIcon;
+        if (desktopIcon) desktopIcon.innerHTML = theme === "dark" ? moonIcon : sunIcon;
+        if (persist) localStorage.setItem('curated-theme', theme);
+      }
+      function getPreferredTheme() {
+        const stored = localStorage.getItem('curated-theme');
+        if (stored === "dark" || stored === "light") return stored;
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) return "dark";
+        return "light";
+      }
+      function toggleTheme() {
+        const isDark = document.body.classList.contains('dark');
+        setTheme(isDark ? "light" : "dark");
+      }
+      document.addEventListener("DOMContentLoaded", function(){
+        // Init theme
+        setTheme(getPreferredTheme(), false);
+        document.getElementById('theme-switch-mobile').onclick = toggleTheme;
+        document.getElementById('theme-switch-desktop').onclick = toggleTheme;
+      });
     </script>
     <style>
         /* Light and dark ambient backgrounds -- matches both modes */
         .ambient1 { background: radial-gradient(circle at 12% 22%, #a5ceff2e 0%, #ffffff00 80%)!important; }
         .ambient2 { background: radial-gradient(circle at 80% 48%, #bff2fe6b 0%, #ffd6fc00 76%)!important; }
         .ambient3 { background: radial-gradient(circle at 80% 120%, #e1f0fa86 0%, #fff0 100%)!important; }
-        .dark .ambient1 { background: radial-gradient(circle at 12% 22%, #7f1dff33 0%, #0e172a00 80%)!important;}
-        .dark .ambient2 { background: radial-gradient(circle at 80% 48%, #0ea5e998 0%, #9333ea00 76%)!important;}
-        .dark .ambient3 { background: radial-gradient(circle at 80% 120%, #2e1065cc 0%, #00000000 100%)!important;}
+        .dark .ambient1, .dark-ambient .ambient1 { background: radial-gradient(circle at 12% 22%, #7f1dff33 0%, #0e172a00 80%)!important;}
+        .dark .ambient2, .dark-ambient .ambient2 { background: radial-gradient(circle at 80% 48%, #0ea5e998 0%, #9333ea00 76%)!important;}
+        .dark .ambient3, .dark-ambient .ambient3 { background: radial-gradient(circle at 80% 120%, #2e1065cc 0%, #00000000 100%)!important;}
         .dark-ambient .ambient1, .dark-ambient .ambient2, .dark-ambient .ambient3 { }
     </style>
 </body>
