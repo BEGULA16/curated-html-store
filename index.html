@@ -106,57 +106,62 @@
         <span class="font-playfair text-2xl md:text-3xl font-extrabold gradient-text drop-shadow-sm select-none tracking-tight animate-fade-in">
             Curated Store - 4v
         </span>
-        <!-- Mobile dropdown menu button (no =) -->
-        <button id="mobile-navbar-toggle" class="md:hidden ml-auto text-cyan-200 hover:text-cyan-400 focus:outline-none transition" aria-label="Open navigation">
-          <!-- Menu icon from lucide/menu -->
-          <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <line x1="4" y1="7" x2="20" y2="7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-            <line x1="4" y1="12" x2="20" y2="12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-            <line x1="4" y1="17" x2="20" y2="17" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
-          </svg>
-        </button>
+        <!-- Mobile Dropdown Dropbox menu button (only on mobile, replaces hamburger) -->
+        <div class="md:hidden relative ml-auto z-[101]">
+          <button id="mobile-navbar-dropbox-toggle" class="text-cyan-200 hover:text-cyan-400 focus:outline-none px-2 py-2 rounded-lg transition" aria-label="Open navigation">
+              <!-- Lucide "chevron-down" icon for dropbox effect -->
+              <svg width="34" height="34" fill="none" stroke="currentColor" stroke-width="2.3" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" stroke="#41d1ff" stroke-width="1.9" fill="#101026"/>
+                <polyline points="8,10 12,14 16,10" stroke="#41d1ff" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+          </button>
+          <div id="mobile-navbar-dropbox-menu" class="hidden absolute right-0 mt-2 w-48 rounded-xl bg-[#181854] bg-opacity-95 shadow-2xl border border-[#232347] py-2 z-[111] animate-scale-in">
+              <a href="/" class="block px-6 py-3 font-bold text-lg text-white transition hover:bg-cyan-700/60 rounded-lg">Home</a>
+              <a href="#products" class="block px-6 py-3 font-bold text-lg text-white transition hover:bg-cyan-700/60 rounded-lg">Products</a>
+              <a href="mailto:info@curatedstore.com" class="block px-6 py-3 font-bold text-lg text-gradient-to-r from-fuchsia-300 to-cyan-400 hover:text-white transition rounded-lg">Contact Us</a>
+          </div>
+        </div>
+        <!-- Desktop nav links persist, mobile is hidden below md. -->
         <div id="navbar-links" class="hidden md:flex gap-7 items-center text-lg font-medium navbar-links">
             <a href="/" class="text-white/90 hover:gradient-text px-1.5 py-0.5 transition-all relative font-medium active:gradient-text font-bold">Home</a>
             <a href="#products" class="text-white/80 hover:gradient-text px-1.5 py-0.5 transition-all relative font-medium">Products</a>
             <a href="mailto:info@curatedstore.com" class="bg-gradient-to-r from-blue-600 to-fuchsia-600 text-white font-semibold rounded-full shadow-2xl px-5 py-2 text-base transition-transform hover:scale-105 focus-visible:ring-2 ring-fuchsia-300 ml-3">Contact Us</a>
         </div>
-        <!-- Dropdown for mobile navbar -->
-        <div id="mobile-navbar-menu" class="md:hidden fixed top-0 left-0 w-full h-full bg-black/80 z-[100] hidden transition-all duration-200">
-          <div class="absolute top-2 right-2">
-            <button id="mobile-navbar-close" class="p-2 bg-slate-900/70 rounded-lg text-cyan-200 hover:text-white transition focus:outline-none">
-              <svg width="34" height="34" stroke="currentColor" fill="none" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18" stroke-width="2.3" stroke-linecap="round"/><line x1="6" y1="18" x2="18" y2="6" stroke-width="2.3" stroke-linecap="round"/></svg>
-            </button>
-          </div>
-          <div class="flex flex-col items-center justify-center min-h-screen space-y-7">
-            <a href="/" class="text-white/90 text-2xl font-bold py-2 hover:gradient-text transition-all">Home</a>
-            <a href="#products" class="text-white/90 text-2xl font-bold py-2 hover:gradient-text transition-all">Products</a>
-            <a href="mailto:info@curatedstore.com" class="bg-gradient-to-r from-blue-600 to-fuchsia-600 text-white text-xl font-semibold rounded-full shadow-2xl px-6 py-3 transition-transform hover:scale-105 ring-fuchsia-300">Contact Us</a>
-          </div>
-        </div>
+        <!-- Remove old mobile menu/hamburger markup/scripts as they're replaced by dropbox. -->
         <script>
-          // Toggle mobile menu
+          // Dropbox logic for mobile nav
           document.addEventListener("DOMContentLoaded", function(){
-            const openBtn = document.getElementById('mobile-navbar-toggle');
-            const closeBtn = document.getElementById('mobile-navbar-close');
-            const menu = document.getElementById('mobile-navbar-menu');
-
+            const dropboxToggle = document.getElementById('mobile-navbar-dropbox-toggle');
+            const dropboxMenu = document.getElementById('mobile-navbar-dropbox-menu');
             let isOpen = false;
-            openBtn && openBtn.addEventListener('click', function() {
-              menu.classList.remove('hidden');
-              document.body.style.overflow = "hidden";
-              isOpen = true;
-            });
-            closeBtn && closeBtn.addEventListener('click', function() {
-              menu.classList.add('hidden');
-              document.body.style.overflow = "";
+            function closeMenu() {
+              dropboxMenu.classList.add('hidden');
               isOpen = false;
+              document.body.style.overflow = "";
+            }
+            function openMenu() {
+              dropboxMenu.classList.remove('hidden');
+              isOpen = true;
+              document.body.style.overflow = "hidden";
+            }
+            dropboxToggle && dropboxToggle.addEventListener('click', function(e) {
+              e.stopPropagation();
+              if(isOpen){
+                closeMenu();
+              } else {
+                openMenu();
+              }
             });
-            // Close when clicking background
-            menu && menu.addEventListener('click', function(e){
-              if(e.target === menu) {
-                menu.classList.add('hidden');
-                document.body.style.overflow = "";
-                isOpen = false;
+            // Close on clicking away
+            document.addEventListener('click', function(e) {
+              if(isOpen && dropboxMenu && !dropboxMenu.contains(e.target) && e.target !== dropboxToggle){
+                closeMenu();
+              }
+            });
+            // Close on escape
+            document.addEventListener('keydown', function(e){
+              if(e.key === 'Escape' && isOpen){
+                closeMenu();
               }
             });
           });
