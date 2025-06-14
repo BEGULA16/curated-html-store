@@ -104,10 +104,22 @@
 
     <!-- Navigation Bar -->
     <nav class="flex items-center justify-between bg-white/5 shadow-lg px-4 py-4 rounded-b-2xl relative z-50" style="backdrop-filter: blur(9px); border-bottom: 1px solid #24245f;">
-        <span class="flex items-center gap-2 font-playfair text-2xl md:text-3xl font-bold gradient-text drop-shadow-sm select-none" data-animate>
-            <img src="https://www.svgrepo.com/show/480260/store.svg" alt="Curated Store Logo" class="inline w-7 h-7 -mt-1 drop-shadow-bright" style="display:inline;">
-            Curated Store
-        </span>
+        <a href="/" class="flex items-center gap-3 select-none no-underline group" aria-label="Curated Store Home">
+            <span class="relative inline-flex items-center">
+                <img 
+                  src="https://www.svgrepo.com/show/480260/store.svg" 
+                  alt="Logo" 
+                  class="w-9 h-9 md:w-11 md:h-11 transition-transform duration-300 group-hover:scale-105 drop-shadow"
+                  style="min-width:2.5rem;"
+                />
+                <span class="absolute -right-4 -top-2 bg-gradient-to-r from-cyan-400 to-fuchsia-500 px-2 py-0.5 text-xs rounded-full font-bold shadow-lg text-black/90 opacity-75 md:text-sm select-none pointer-events-none">
+                  ★
+                </span>
+            </span>
+            <span class="text-2xl md:text-3xl font-extrabold font-playfair tracking-tight gradient-text drop-shadow-sm duration-300 group-hover:scale-105 animate-fade-in">
+                Curated<span class="text-cyan-400">Store</span>
+            </span>
+        </a>
         <button class="nav-toggle" aria-label="Open navigation" onclick="document.querySelector('.navbar-links').classList.toggle('open')">
             <svg width="30" height="30" fill="none" stroke="#93c5fd">
                 <rect y="8" width="30" height="3" rx="1.4" fill="#93c5fd"></rect>
