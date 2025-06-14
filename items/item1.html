@@ -7,149 +7,223 @@
     <title>Sample - Curated Store</title>
     <meta name="description" content="this item is a sample" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;400&display=swap">
     <style>
+        html, body { height: 100%; overflow-x: hidden; }
+        body {
+            background: #000;
+            color: #fff;
+            font-family: 'Playfair Display', serif;
+        }
         .gradient-text {
-            background: linear-gradient(to right, #2563eb, #9333ea);
+            background: linear-gradient(to right, #7f1dff 40%, #41d1ff 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
+        .ambient1 {
+            background: radial-gradient(circle at 12% 22%, #7f1dff22 0%, #0e172a00 80%);
+        }
+        .ambient2 {
+            background: radial-gradient(circle at 80% 48%, #0ea5e960 0%, #9333ea00 76%);
+        }
+        .ambient3 {
+            background: radial-gradient(circle at 80% 120%, #2e1065aa 0%, #00000000 100%);
+        }
+        @keyframes fade-in {
+            0%{opacity:0;transform:translateY(18px);}
+            100%{opacity:1;transform:translateY(0);}
+        }
+        .animate-fade-in { animation: fade-in 0.7s cubic-bezier(.19,1,.39,.98) both; }
+        /* Card/Glass effect for product box */
+        .glass-card {
+            background: linear-gradient(135deg, #18182b44 80%, #2e254d13 100%);
+            border: 1.5px solid #22214366;
+            box-shadow: 0 8px 40px #14134628, 0 3px 15px #7f1dff18;
+        }
+        .review-card {
+            background: linear-gradient(120deg, #15151e7c 95%, #02020221 100%);
+            border: 1.5px solid #23223c55;
+        }
+        .search-bar-dark {
+            background: #12121cdd;
+        }
+        .navbar-links.open {
+            right: 0;
+            opacity: 1;
+            pointer-events: all;
+        }
+        .navbar-links {
+            transition: right 0.24s cubic-bezier(.31,1,.65,1), opacity 0.22s;
+        }
+        /* Gradient button */
+        .btn-gradient {
+            background: linear-gradient(90deg, #298cff 60%, #963cff 100%);
+            color: #fff;
+            box-shadow: 0 0 8px #41d1ff48;
+        }
+        .btn-gradient:hover, .btn-gradient:focus-visible {
+            background: linear-gradient(90deg, #3b82fd 40%, #7f1dff 100%);
+            color: #fff;
+            transform: scale(1.035);
+            box-shadow: 0 8px 32px #9333ea39;
+        }
     </style>
 </head>
-<body class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
-    <!-- Header -->
-    <header class="bg-white shadow-lg">
-        <div class="container mx-auto px-4 py-4">
-            <a href="../index.html" class="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
-                </svg>
-                Back to Store
-            </a>
-        </div>
-    </header>
+<body class="relative min-h-screen bg-black text-white overflow-x-hidden">
 
-    <div class="container mx-auto px-4 py-8">
-        <!-- Product Section -->
-        <div class="bg-white rounded-2xl shadow-xl overflow-hidden mb-8">
-            <div class="grid md:grid-cols-2 gap-8 p-8">
-                <!-- Product Image -->
-                <div class="aspect-square overflow-hidden rounded-xl">
+    <!-- Ambient glowing backgrounds for AMOLED/dark -->
+    <div class="fixed top-0 left-0 w-full h-full z-0 pointer-events-none">
+        <div class="absolute w-2/3 h-1/3 left-0 top-0 ambient1"></div>
+        <div class="absolute w-2/3 h-2/5 right-0 top-1/4 ambient2"></div>
+        <div class="absolute w-1/2 h-2/5 right-0 bottom-[-15%] ambient3"></div>
+    </div>
+
+    <!-- Animated Navigation Bar with Search -->
+    <nav class="flex items-center justify-between bg-white/5 shadow-lg px-4 py-4 rounded-b-2xl relative z-50" style="backdrop-filter: blur(9px); border-bottom: 1.5px solid #24245f;">
+        <a href="../index.html" class="inline-flex items-center text-blue-300 hover:text-cyan-300 transition-colors text-base font-medium" style="font-family:inherit;">
+            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+            </svg>
+            Back to Store
+        </a>
+        <button class="nav-toggle" aria-label="Open navigation" onclick="document.querySelector('.navbar-links').classList.toggle('open')">
+            <svg width="30" height="30" fill="none" stroke="#93c5fd">
+                <rect y="8" width="30" height="3" rx="1.4" fill="#93c5fd"></rect>
+                <rect y="18" width="30" height="3" rx="1.4" fill="#93c5fd"></rect>
+            </svg>
+        </button>
+        <div class="flex gap-7 items-center text-lg font-medium navbar-links">
+            <a href="../index.html" class="text-white/90 hover:gradient-text px-1.5 py-0.5 transition-all relative font-medium font-bold">Home</a>
+            <a href="#reviews" class="text-white/80 hover:gradient-text px-1.5 py-0.5 transition-all relative font-medium">Reviews</a>
+            <a href="mailto:info@curatedstore.com" class="bg-gradient-to-r from-blue-600 to-fuchsia-600 text-white font-semibold rounded-full shadow-2xl px-5 py-2 text-base transition-transform hover:scale-105 focus-visible:ring-2 ring-fuchsia-300 ml-3">Contact Us</a>
+            <!-- Nav search (hidden on xs but visible on md+) -->
+            <form class="hidden md:flex items-center bg-[#090920]/80 rounded-lg px-2 py-1 ml-4 search-bar-dark border border-[#2f375767]" style="min-width:195px;">
+                <input id="navbar-search" type="text" placeholder="Search..." class="flex-1 bg-transparent rounded-md px-3 py-1.5 text-white text-base font-medium placeholder:text-cyan-200/45 outline-none border-none shadow-none" autocomplete="off"/>
+                <svg class="w-5 h-5 text-cyan-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </form>
+        </div>
+    </nav>
+    <!-- Mobile nav search -->
+    <form class="flex md:hidden items-center bg-[#090920]/80 rounded-lg px-2 py-1 mx-4 mt-3 mb-0 search-bar-dark border border-[#2f375767]" style="min-width:0;">
+        <input id="navbar-search-mobile" type="text" placeholder="Search..." class="flex-1 bg-transparent rounded-md px-3 py-1.5 text-white text-base font-medium placeholder:text-cyan-200/45 outline-none border-none shadow-none" autocomplete="off"/>
+        <svg class="w-5 h-5 text-cyan-300" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+    </form>
+
+    <!-- Main Product Card (with glass and animations) -->
+    <section class="container mx-auto px-4 py-10 relative z-10">
+        <div class="max-w-5xl mx-auto flex flex-col md:flex-row gap-10 glass-card rounded-3xl overflow-hidden shadow-xl mb-12 animate-fade-in">
+            <!-- Product Image -->
+            <div class="basis-1/2 p-8 flex justify-center items-center">
+                <div class="aspect-square w-full max-w-md bg-[#181927] rounded-2xl overflow-hidden shadow-lg">
                     <img src="https://images.unsplash.com/photo-1745874864678-f464940bb513?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
                          alt="Sample"
-                         class="w-full h-full object-cover">
+                         class="w-full h-full object-cover transition-transform duration-500 rounded-2xl hover:scale-105">
                 </div>
-
-                <!-- Product Details -->
-                <div class="flex flex-col justify-center">
-                    <h1 class="text-4xl font-bold text-gray-800 mb-4">Sample</h1>
-                    <p class="text-xl text-gray-600 mb-6">this item is a sample</p>
-                    
-                    <div class="bg-gray-50 rounded-xl p-6 mb-6">
-                        <h3 class="text-lg font-semibold text-gray-800 mb-3">Product Information</h3>
-                        <p class="text-gray-700 leading-relaxed">this item is a sample, the item is a sample item, were testing the site so its a sample item</p>
-                    </div>
-
-                    <div class="flex items-center justify-between mb-8">
-                        <span class="text-4xl font-bold text-green-600">$999</span>
-                        <div class="flex items-center text-yellow-500">
-                            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                            <span class="ml-2 text-gray-600">(4.8/5)</span>
-                        </div>
-                    </div>
-
-                    <button onclick="handleBuyClick()"
-                            class="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 px-8 rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 flex items-center justify-center">
-                        <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-                        </svg>
-                        Contact to Buy
-                    </button>
+            </div>
+            <!-- Product Details -->
+            <div class="basis-1/2 flex flex-col justify-center gap-7 pr-8 pl-2 pt-8 pb-8">
+                <h1 class="text-4xl font-bold text-white mb-1 font-playfair">Sample</h1>
+                <p class="text-lg text-cyan-200/85 mb-1">this item is a sample</p>
+                <div class="bg-[#1e1d2d]/70 rounded-xl p-5 mb-0 border border-[#2c2950]/60 shadow animate-fade-in" style="animation-delay:.05s">
+                    <h3 class="text-base font-bold text-white mb-2">Product Information</h3>
+                    <p class="text-cyan-100/80 leading-relaxed">this item is a sample, the item is a sample item, were testing the site so its a sample item</p>
                 </div>
+                <div class="flex flex-wrap items-center justify-between gap-3 mb-2 pt-2">
+                    <span class="text-3xl md:text-4xl font-extrabold text-[#43ffae]">$999</span>
+                    <div class="flex items-center text-yellow-400 gap-1">
+                        <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        <span class="ml-2 text-cyan-100/60 text-lg font-medium">(4.8/5)</span>
+                    </div>
+                </div>
+                <button onclick="handleBuyClick()"
+                    class="btn-gradient text-white py-4 px-8 rounded-xl font-bold text-lg focus-visible:ring-2 ring-cyan-400 mb-2 transition-all duration-300 transform hover:scale-105 flex items-center justify-center gap-2 shadow-lg">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="10" stroke="#fff" fill="none"></circle>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01"></path>
+                    </svg>
+                    Contact to Buy
+                </button>
             </div>
         </div>
+    </section>
 
-        <!-- Reviews Section -->
-        <div class="bg-white rounded-2xl shadow-xl p-8">
-            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Customer Reviews</h2>
-            
+    <!-- Customer Reviews -->
+    <section id="reviews" class="container mx-auto px-4 pb-16 relative z-10">
+        <div class="max-w-5xl mx-auto review-card rounded-2xl shadow-xl p-8 animate-fade-in">
+            <h2 class="text-3xl font-bold text-white mb-8 text-center font-playfair gradient-text">Customer Reviews</h2>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="bg-gray-50 rounded-xl p-6">
-                    <div class="flex items-center justify-between mb-4">
-                        <h4 class="font-semibold text-gray-800">John D.</h4>
-                        <div class="flex items-center text-yellow-500">
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <div class="review-card p-6 rounded-xl border border-[#2c2d3f]/60 animate-fade-in" style="animation-delay:.07s">
+                    <div class="flex items-center justify-between mb-3">
+                        <h4 class="font-semibold text-white">John D.</h4>
+                        <div class="flex items-center text-yellow-400 gap-0.5">
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                         </div>
                     </div>
-                    <p class="text-gray-700 mb-3">Amazing quality! Exactly as described and arrived quickly.</p>
-                    <p class="text-sm text-gray-500">2024-01-15</p>
+                    <p class="text-cyan-100 mb-3">Amazing quality! Exactly as described and arrived quickly.</p>
+                    <p class="text-xs text-cyan-400/70">2024-01-15</p>
                 </div>
-
-                <div class="bg-gray-50 rounded-xl p-6">
-                    <div class="flex items-center justify-between mb-4">
-                        <h4 class="font-semibold text-gray-800">Sarah M.</h4>
-                        <div class="flex items-center text-yellow-500">
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <div class="review-card p-6 rounded-xl border border-[#2c2d3f]/60 animate-fade-in" style="animation-delay:.12s">
+                    <div class="flex items-center justify-between mb-3">
+                        <h4 class="font-semibold text-white">Sarah M.</h4>
+                        <div class="flex items-center text-yellow-400 gap-0.5">
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                         </div>
                     </div>
-                    <p class="text-gray-700 mb-3">Love this product! Great value for money.</p>
-                    <p class="text-sm text-gray-500">2024-01-10</p>
+                    <p class="text-cyan-100 mb-3">Love this product! Great value for money.</p>
+                    <p class="text-xs text-cyan-400/70">2024-01-10</p>
                 </div>
-
-                <div class="bg-gray-50 rounded-xl p-6">
-                    <div class="flex items-center justify-between mb-4">
-                        <h4 class="font-semibold text-gray-800">Mike R.</h4>
-                        <div class="flex items-center text-yellow-500">
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
-                            <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                <div class="review-card p-6 rounded-xl border border-[#2c2d3f]/60 animate-fade-in" style="animation-delay:.17s">
+                    <div class="flex items-center justify-between mb-3">
+                        <h4 class="font-semibold text-white">Mike R.</h4>
+                        <div class="flex items-center text-yellow-400 gap-0.5">
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                         </div>
                     </div>
-                    <p class="text-gray-700 mb-3">Good quality, would recommend to others.</p>
-                    <p class="text-sm text-gray-500">2024-01-05</p>
+                    <p class="text-cyan-100 mb-3">Good quality, would recommend to others.</p>
+                    <p class="text-xs text-cyan-400/70">2024-01-05</p>
                 </div>
             </div>
-
             <div class="text-center mt-8">
-                <div class="inline-flex items-center bg-green-100 text-green-800 px-6 py-3 rounded-full">
+                <div class="inline-flex items-center bg-green-900/80 text-green-200 px-6 py-3 rounded-full animate-fade-in">
                     <svg class="w-5 h-5 fill-current mr-2" viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
                     <span class="font-semibold">4.8/5 Average Rating</span>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-12 mt-16">
+    <!-- Footer (just like home, gradient text in logo) -->
+    <footer class="bg-black border-t-[1.5px] border-indigo-900/30 text-white py-12 mt-8 relative z-10 shadow-inner shadow-blue-900/[.10]">
         <div class="container mx-auto px-4 text-center">
-            <h3 class="text-2xl font-bold mb-4">Curated Store</h3>
+            <h3 class="text-2xl font-bold mb-4 gradient-text">Curated Store</h3>
             <p class="text-gray-400 mb-6">Your trusted source for premium products</p>
-            <div class="flex justify-center space-x-6 mb-6">
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6 mb-6">
                 <a href="#" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a>
                 <a href="#" class="text-gray-400 hover:text-white transition-colors">Terms of Service</a>
-                <a href="#" class="text-gray-400 hover:text-white transition-colors">Contact Us</a>
+                <a href="mailto:info@curatedstore.com" class="inline-block navbar-contact-btn ml-0">Contact Us</a>
             </div>
             <p class="text-gray-500 text-sm">© 2024 Curated Store. All rights reserved.</p>
         </div>
     </footer>
-
     <script>
         function handleBuyClick() {
-            // Replace with your actual WhatsApp number and customize the message
             window.open('https://wa.me/1234567890?text=Hi, I am interested in buying the Sample', '_blank');
         }
     </script>
