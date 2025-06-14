@@ -106,17 +106,61 @@
         <span class="font-playfair text-2xl md:text-3xl font-extrabold gradient-text drop-shadow-sm select-none tracking-tight animate-fade-in">
             Curated Store - 4v
         </span>
-        <button class="nav-toggle" aria-label="Open navigation" onclick="document.querySelector('.navbar-links').classList.toggle('open')">
-            <svg width="30" height="30" fill="none" stroke="#93c5fd">
-                <rect y="8" width="30" height="3" rx="1.4" fill="#93c5fd"></rect>
-                <rect y="18" width="30" height="3" rx="1.4" fill="#93c5fd"></rect>
-            </svg>
+        <!-- Mobile dropdown menu button (no =) -->
+        <button id="mobile-navbar-toggle" class="md:hidden ml-auto text-cyan-200 hover:text-cyan-400 focus:outline-none transition" aria-label="Open navigation">
+          <!-- Menu icon from lucide/menu -->
+          <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <line x1="4" y1="7" x2="20" y2="7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+            <line x1="4" y1="12" x2="20" y2="12" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+            <line x1="4" y1="17" x2="20" y2="17" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
         </button>
-        <div class="flex gap-7 items-center text-lg font-medium navbar-links">
+        <div id="navbar-links" class="hidden md:flex gap-7 items-center text-lg font-medium navbar-links">
             <a href="/" class="text-white/90 hover:gradient-text px-1.5 py-0.5 transition-all relative font-medium active:gradient-text font-bold">Home</a>
             <a href="#products" class="text-white/80 hover:gradient-text px-1.5 py-0.5 transition-all relative font-medium">Products</a>
             <a href="mailto:info@curatedstore.com" class="bg-gradient-to-r from-blue-600 to-fuchsia-600 text-white font-semibold rounded-full shadow-2xl px-5 py-2 text-base transition-transform hover:scale-105 focus-visible:ring-2 ring-fuchsia-300 ml-3">Contact Us</a>
         </div>
+        <!-- Dropdown for mobile navbar -->
+        <div id="mobile-navbar-menu" class="md:hidden fixed top-0 left-0 w-full h-full bg-black/80 z-[100] hidden transition-all duration-200">
+          <div class="absolute top-2 right-2">
+            <button id="mobile-navbar-close" class="p-2 bg-slate-900/70 rounded-lg text-cyan-200 hover:text-white transition focus:outline-none">
+              <svg width="34" height="34" stroke="currentColor" fill="none" viewBox="0 0 24 24"><line x1="6" y1="6" x2="18" y2="18" stroke-width="2.3" stroke-linecap="round"/><line x1="6" y1="18" x2="18" y2="6" stroke-width="2.3" stroke-linecap="round"/></svg>
+            </button>
+          </div>
+          <div class="flex flex-col items-center justify-center min-h-screen space-y-7">
+            <a href="/" class="text-white/90 text-2xl font-bold py-2 hover:gradient-text transition-all">Home</a>
+            <a href="#products" class="text-white/90 text-2xl font-bold py-2 hover:gradient-text transition-all">Products</a>
+            <a href="mailto:info@curatedstore.com" class="bg-gradient-to-r from-blue-600 to-fuchsia-600 text-white text-xl font-semibold rounded-full shadow-2xl px-6 py-3 transition-transform hover:scale-105 ring-fuchsia-300">Contact Us</a>
+          </div>
+        </div>
+        <script>
+          // Toggle mobile menu
+          document.addEventListener("DOMContentLoaded", function(){
+            const openBtn = document.getElementById('mobile-navbar-toggle');
+            const closeBtn = document.getElementById('mobile-navbar-close');
+            const menu = document.getElementById('mobile-navbar-menu');
+
+            let isOpen = false;
+            openBtn && openBtn.addEventListener('click', function() {
+              menu.classList.remove('hidden');
+              document.body.style.overflow = "hidden";
+              isOpen = true;
+            });
+            closeBtn && closeBtn.addEventListener('click', function() {
+              menu.classList.add('hidden');
+              document.body.style.overflow = "";
+              isOpen = false;
+            });
+            // Close when clicking background
+            menu && menu.addEventListener('click', function(e){
+              if(e.target === menu) {
+                menu.classList.add('hidden');
+                document.body.style.overflow = "";
+                isOpen = false;
+              }
+            });
+          });
+        </script>
     </nav>
 
     <!-- Hero Section -->
@@ -132,11 +176,25 @@
     </section>
 
     <!-- Category Selection Bar -->
-    <section class="container mx-auto px-4 pb-4 flex justify-center select-none" id="category-bar" data-animate>
-        <button class="category-btn selected" data-category="all" id="cat-btn-all" type="button">ALL</button>
-        <button class="category-btn" data-category="1" id="cat-btn-1" type="button">Category 1</button>
-        <button class="category-btn" data-category="2" id="cat-btn-2" type="button">Category 2</button>
+    <section class="container mx-auto px-2 pb-4 flex justify-center select-none" id="category-bar" data-animate>
+        <div class="flex w-full space-x-2 md:space-x-4 overflow-x-auto scrollbar-thin scrollbar-thumb-cyan-600 scrollbar-track-black snap-x snap-mandatory" style="scrollbar-width: thin;">
+          <button class="category-btn selected snap-center" data-category="all" id="cat-btn-all" type="button">ALL</button>
+          <button class="category-btn snap-center" data-category="1" id="cat-btn-1" type="button">Category 1</button>
+          <button class="category-btn snap-center" data-category="2" id="cat-btn-2" type="button">Category 2</button>
+        </div>
     </section>
+    <style>
+      /* Hide scrollbar for mobile category bar, but keep scrollability */
+      #category-bar .scrollbar-thin::-webkit-scrollbar { height: 4px; }
+      #category-bar .scrollbar-thin::-webkit-scrollbar-thumb { background: #0ea5e9; border-radius: 10px; }
+      @media (max-width: 768px) {
+        #category-bar .category-btn { min-width: 100px; font-size: 0.97rem; }
+        #category-bar .category-btn { padding: 0.47em 1em; }
+      }
+      @media (max-width: 480px) {
+        #category-bar .category-btn { font-size: .92rem; min-width: 85px; padding-left: .7em; padding-right: .7em; }
+      }
+    </style>
 
     <!-- Products Grid Grouped by Category when ALL is selected -->
     <section id="products" class="container mx-auto px-2 sm:px-4 pb-20 relative z-10">
