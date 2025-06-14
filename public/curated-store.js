@@ -1,3 +1,4 @@
+
 /**
  * Handles all curated store logic: category filtering, product rendering, search, and UI animations.
  */
@@ -7,139 +8,53 @@ const products = [
   {
     id: 1,
     name: "Sample 1",
-    description: "Gorgeous ultralight lamp with ambient glow.",
-    price: 120,
-    image: "https://images.unsplash.com/photo-1745874864678-f464940bb513?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    description: "this item is a sample",
+    price: 999,
+    image:
+      "https://images.unsplash.com/photo-1745874864678-f464940bb513?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     link: "items/item1.html",
-    category: "1"
+    category: "1",
   },
   {
     id: 2,
     name: "Sample 2",
-    description: "Handcrafted walnut tray, premium finish.",
-    price: 90,
-    image: "https://images.unsplash.com/photo-1519125323398-675f0ddb6308?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    description: "this item is a sample",
+    price: 999,
+    image:
+      "https://images.unsplash.com/photo-1745874864678-f464940bb513?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     link: "items/item2.html",
-    category: "1"
+    category: "1",
   },
   {
     id: 3,
     name: "Sample 3",
-    description: "Elegant glass vase with vintage finish.",
-    price: 50,
-    image: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    description: "this item is a sample",
+    price: 999,
+    image:
+      "https://images.unsplash.com/photo-1745874864678-f464940bb513?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     link: "items/item3.html",
-    category: "2"
+    category: "1",
   },
   {
     id: 4,
     name: "Sample 4",
-    description: "Ultra-soft cotton towel set.",
-    price: 35,
-    image: "https://images.unsplash.com/photo-1444065381814-865dc9da92c0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    description: "this item is a sample",
+    price: 999,
+    image:
+      "https://images.unsplash.com/photo-1745874864678-f464940bb513?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     link: "items/item4.html",
-    category: "2"
+    category: "2",
   },
   {
     id: 5,
     name: "Sample 5",
-    description: "Minimalist oak desk clock.",
-    price: 70,
-    image: "https://images.unsplash.com/photo-1455656678494-4d1ef1c6f88e?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    description: "this item is a sample",
+    price: 999,
+    image:
+      "https://images.unsplash.com/photo-1745874864678-f464940bb513?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     link: "items/item5.html",
-    category: "2"
+    category: "2",
   },
-  // New products:
-  {
-    id: 6,
-    name: "Sample 6",
-    description: "Portable Bluetooth speaker, modern style.",
-    price: 110,
-    image: "https://images.unsplash.com/photo-1465101046530-73398c7f28ca?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    link: "items/item1.html",
-    category: "3"
-  },
-  {
-    id: 7,
-    name: "Sample 7",
-    description: "Designer ceramic plate, blue blossom motif.",
-    price: 45,
-    image: "https://images.unsplash.com/photo-1511689660979-2cd30701e126?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    link: "items/item2.html",
-    category: "3"
-  },
-  {
-    id: 8,
-    name: "Sample 8",
-    description: "Natural linen pillow cover.",
-    price: 28,
-    image: "https://images.unsplash.com/photo-1454023492550-5696f8ff10e1?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    link: "items/item3.html",
-    category: "4"
-  },
-  {
-    id: 9,
-    name: "Sample 9",
-    description: "Retro teal kettle, induction compatible.",
-    price: 60,
-    image: "https://images.unsplash.com/photo-1515378791036-0648a3ef77b2?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    link: "items/item4.html",
-    category: "4"
-  },
-  {
-    id: 10,
-    name: "Sample 10",
-    description: "Wireless charging pad, compact.",
-    price: 40,
-    image: "https://images.unsplash.com/photo-1424746219973-8fe3bd07d8e3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    link: "items/item5.html",
-    category: "5"
-  },
-  {
-    id: 11,
-    name: "Sample 11",
-    description: "Bamboo bath caddy, bathtub tray.",
-    price: 54,
-    image: "https://images.unsplash.com/photo-1470337458703-46ad1756a187?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    link: "items/item1.html",
-    category: "5"
-  },
-  {
-    id: 12,
-    name: "Sample 12",
-    description: "Eco friendly reusable water bottle.",
-    price: 32,
-    image: "https://images.unsplash.com/photo-1506089676908-3592f7389d4d?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    link: "items/item2.html",
-    category: "6"
-  },
-  {
-    id: 13,
-    name: "Sample 13",
-    description: "Silicone kitchen utensil set.",
-    price: 62,
-    image: "https://images.unsplash.com/photo-1485962398705-ef6a13c41e8f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    link: "items/item3.html",
-    category: "6"
-  },
-  {
-    id: 14,
-    name: "Sample 14",
-    description: "Brushed steel insulated mug.",
-    price: 25,
-    image: "https://images.unsplash.com/photo-1416339306562-f3d12fefd36f?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    link: "items/item4.html",
-    category: "7"
-  },
-  {
-    id: 15,
-    name: "Sample 15",
-    description: "Modern desk organizer, modular set.",
-    price: 75,
-    image: "https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    link: "items/item5.html",
-    category: "7"
-  }
 ];
 
 // ---- State ----
@@ -163,11 +78,10 @@ function filterProductsBySearchAndCategory(products, query, category) {
 }
 
 function groupProductsByCategory(productsArr) {
-  const result = {};
-  for (let cat = 1; cat <= 7; cat++) {
-    result[String(cat)] = productsArr.filter((p) => p.category === String(cat));
-  }
-  return result;
+  return {
+    "1": productsArr.filter((p) => p.category === "1"),
+    "2": productsArr.filter((p) => p.category === "2"),
+  };
 }
 
 function renderProducts(category, query = "") {
@@ -175,7 +89,9 @@ function renderProducts(category, query = "") {
   if (!grid) return;
   grid.innerHTML = "";
 
+  // Check for "all" (grouped) or single category mode
   if (category === "all") {
+    // Group & show labels
     const filtered = filterProductsBySearchAndCategory(products, query, "all");
     const grouped = groupProductsByCategory(filtered);
 
@@ -195,24 +111,25 @@ function renderProducts(category, query = "") {
       return;
     }
 
-    for (let cat = 1; cat <= 7; cat++) {
-      const groupList = grouped[String(cat)];
-      if (!groupList || groupList.length === 0) continue;
+    ["1", "2"].forEach((cat) => {
+      if (grouped[cat].length === 0) return;
+      // Category heading
       const label = document.createElement("h4");
-      label.textContent = `Category ${cat}`;
+      label.textContent = cat === "1" ? "Category 1" : "Category 2";
       label.className =
         "text-2xl font-bold mt-10 mb-4 gradient-text animate-fade-in";
       grid.appendChild(label);
 
+      // Product grid
       const catGroup = document.createElement("div");
       catGroup.className =
         "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8";
-      groupList.forEach((prod, i) => {
+      grouped[cat].forEach((prod, i) => {
         const node = createProductCard(prod, i);
         catGroup.appendChild(node);
       });
       grid.appendChild(catGroup);
-    }
+    });
   } else {
     const filtered = filterProductsBySearchAndCategory(
       products,
@@ -298,9 +215,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Category toggle
   document.getElementById("cat-btn-all").addEventListener("click", () => setCategory("all"));
-  for(let c = 1; c <= 7; c++) {
-    document.getElementById(`cat-btn-${c}`).addEventListener("click", () => setCategory(String(c)));
-  }
+  document.getElementById("cat-btn-1").addEventListener("click", () => setCategory("1"));
+  document.getElementById("cat-btn-2").addEventListener("click", () => setCategory("2"));
 
   // Search bar event
   searchInput().addEventListener("input", onSearchInput);
