@@ -89,10 +89,27 @@ function renderProducts(category, query = "") {
   if (!grid) return;
   grid.innerHTML = "";
 
+  // Check for "all" (grouped) or single category mode
   if (category === "all") {
     // Group & show labels
     const filtered = filterProductsBySearchAndCategory(products, query, "all");
     const grouped = groupProductsByCategory(filtered);
+
+    if (filtered.length === 0) {
+      const noResults = document.createElement("div");
+      noResults.className =
+        "flex flex-col items-center justify-center min-h-[200px] w-full animate-fade-in";
+      noResults.innerHTML = `
+        <svg class="w-14 h-14 mb-2 text-cyan-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 48 48">
+          <circle cx="24" cy="24" r="18" stroke="#7f1dff" stroke-width="2.5" fill="none"></circle>
+          <path d="M20 20l8 8m0-8l-8 8" stroke="#41d1ff" stroke-width="2.3" stroke-linecap="round"/>
+        </svg>
+        <div class="text-lg font-semibold gradient-text mb-1">No products found</div>
+        <p class="text-sm text-slate-400">Try different search terms or categories.</p>
+      `;
+      grid.appendChild(noResults);
+      return;
+    }
 
     ["1", "2"].forEach((cat) => {
       if (grouped[cat].length === 0) return;
@@ -119,6 +136,23 @@ function renderProducts(category, query = "") {
       query,
       category
     );
+
+    if (filtered.length === 0) {
+      const noResults = document.createElement("div");
+      noResults.className =
+        "flex flex-col items-center justify-center min-h-[200px] w-full animate-fade-in";
+      noResults.innerHTML = `
+        <svg class="w-14 h-14 mb-2 text-cyan-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 48 48">
+          <circle cx="24" cy="24" r="18" stroke="#7f1dff" stroke-width="2.5" fill="none"></circle>
+          <path d="M20 20l8 8m0-8l-8 8" stroke="#41d1ff" stroke-width="2.3" stroke-linecap="round"/>
+        </svg>
+        <div class="text-lg font-semibold gradient-text mb-1">No products found</div>
+        <p class="text-sm text-slate-400">Try different search terms or categories.</p>
+      `;
+      grid.appendChild(noResults);
+      return;
+    }
+
     const productGrid = document.createElement("div");
     productGrid.className =
       "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8";
