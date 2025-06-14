@@ -143,6 +143,14 @@
         <div id="products-grid" data-animate>
             <!-- Populated by curated-store.js -->
         </div>
+        <div id="js-error" class="hidden flex flex-col items-center justify-center min-h-[180px] w-full mt-8">
+          <svg class="w-14 h-14 mb-1 text-fuchsia-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 48 48">
+            <circle cx="24" cy="24" r="18" stroke="#7f1dff" stroke-width="2.5" fill="none"></circle>
+            <path d="M16 16l16 16m0-16l-16 16" stroke="#e11d48" stroke-width="2.3" stroke-linecap="round"/>
+          </svg>
+          <div class="text-lg font-semibold gradient-text mb-1">Couldn't load products</div>
+          <p class="text-sm text-slate-400">Make sure you're viewing this site <span class="text-fuchsia-400 font-bold">from a server</span> (not file://), and JavaScript is enabled.</p>
+        </div>
     </section>
 
     <!-- Footer -->
@@ -163,7 +171,18 @@
         <strong>Please enable JavaScript to view the products.</strong>
       </div>
     </noscript>
-    <!-- Lightweight JS for logic and animations -->
-    <script src="curated-store.js"></script>
+    <!-- JavaScript loaded at end of body, with error fallback handling -->
+    <script>
+      window.addEventListener('DOMContentLoaded', function () {
+        setTimeout(function() {
+          var grid = document.getElementById("products-grid");
+          var jsError = document.getElementById("js-error");
+          if (grid && !grid.innerHTML.trim()) {
+            jsError.classList.remove("hidden");
+          }
+        }, 1200);
+      });
+    </script>
+    <script src="public/curated-store.js"></script>
 </body>
 </html>
