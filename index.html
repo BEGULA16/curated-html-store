@@ -225,6 +225,11 @@
           <button class="category-btn selected snap-center" data-category="all" id="cat-btn-all" type="button">ALL</button>
           <button class="category-btn snap-center" data-category="1" id="cat-btn-1" type="button">Category 1</button>
           <button class="category-btn snap-center" data-category="2" id="cat-btn-2" type="button">Category 2</button>
+          <button class="category-btn snap-center" data-category="3" id="cat-btn-3" type="button">Category 3</button>
+          <button class="category-btn snap-center" data-category="4" id="cat-btn-4" type="button">Category 4</button>
+          <button class="category-btn snap-center" data-category="5" id="cat-btn-5" type="button">Category 5</button>
+          <button class="category-btn snap-center" data-category="6" id="cat-btn-6" type="button">Category 6</button>
+          <button class="category-btn snap-center" data-category="7" id="cat-btn-7" type="button">Category 7</button>
         </div>
     </section>
     <style>
@@ -240,105 +245,22 @@
       }
     </style>
 
-    <!-- Products Grid Grouped by Category when ALL is selected -->
-    <section id="products" class="container mx-auto px-2 sm:px-4 pb-20 relative z-10">
-        <div id="products-wrapper">
-            <div class="products-category-group" data-category="1">
-                <h4 class="text-2xl font-bold mt-8 mb-4 gradient-text animate-fade-in text-left sm:text-left md:text-left lg:text-center xl:text-center">Category 1</h4>
-                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 md:gap-8 justify-center items-start max-w-full mx-auto">
-                    <!-- Product Card Sample 1 for all breakpoints. Repeat pattern for all products.  -->
-                    <a href="items/item1.html" class="group product-card rounded-xl sm:rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl focus-visible:outline-fuchsia-400 transition-all duration-300 transform hover:-translate-y-2 hover:scale-105 will-change-transform animate-fade-in product-item flex flex-col"
-                        data-category="1" data-name="Sample 1" style="animation-delay:.01s; min-width:0;">
-                        <div class="w-full aspect-[4/3] overflow-hidden bg-[#090912] border-b-[1.2px] border-[#222143] flex-shrink-0">
-                            <img src="https://images.unsplash.com/photo-1745874864678-f464940bb513?q=80&amp;w=2070&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                                 alt="Sample 1"
-                                 class="w-full h-full object-cover transition-transform duration-300 rounded-xl group-hover:scale-110 group-hover:rotate-1 group-hover:brightness-110" />
-                        </div>
-                        <div class="flex flex-col flex-grow justify-between px-3 py-2 sm:px-5 sm:py-5 bg-transparent font-sans">
-                            <h3 class="text-base sm:text-lg md:text-xl font-bold text-white mb-1 group-hover:text-cyan-400 group-hover:scale-105 transition-all font-playfair leading-tight">Sample 1</h3>
-                            <p class="text-xs sm:text-sm text-slate-300 mb-2 group-hover:text-indigo-100 transition-colors duration-200 truncate">this item is a sample</p>
-                            <div class="flex justify-between items-center mt-auto">
-                                <span class="text-lg sm:text-xl font-bold text-[#43ffae] group-hover:text-[#3be0d0] transition-colors">$999</span>
-                                <span class="card-btn bg-[#111] border border-cyan-700 text-cyan-400 px-3 py-1 rounded-full text-xs sm:text-sm font-medium shadow transition-all group-hover:bg-cyan-500 group-hover:text-[#fff]">View Details</span>
-                            </div>
-                        </div>
-                    </a>
+    <style>
+      /* Hide scrollbar for mobile category bar, but keep scrollability */
+      #category-bar .scrollbar-thin::-webkit-scrollbar { height: 4px; }
+      #category-bar .scrollbar-thin::-webkit-scrollbar-thumb { background: #0ea5e9; border-radius: 10px; }
+      @media (max-width: 768) {
+        #category-bar .category-btn { min-width: 100px; font-size: 0.97rem; }
+        #category-bar .category-btn { padding: 0.47em 1em; }
+      }
+      @media (max-width: 480px) {
+        #category-bar .category-btn { font-size: .92rem; min-width: 85px; padding-left: .7em; padding-right: .7em; }
+      }
+    </style>
 
-                    <!-- Repeat card for Sample 2 and Sample 3, align content the same way -->
-                    <a href="items/item2.html" class="group product-card rounded-xl sm:rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl focus-visible:outline-fuchsia-400 transition-all duration-300 transform hover:-translate-y-2 hover:scale-105 will-change-transform animate-fade-in product-item flex flex-col"
-                        data-category="1" data-name="Sample 2" style="animation-delay:.08s; min-width:0;">
-                        <div class="w-full aspect-[4/3] overflow-hidden bg-[#090912] border-b-[1.2px] border-[#222143] flex-shrink-0">
-                            <img src="https://images.unsplash.com/photo-1745874864678-f464940bb513?q=80&amp;w=2070&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                                 alt="Sample 2"
-                                 class="w-full h-full object-cover transition-transform duration-300 rounded-xl group-hover:scale-110 group-hover:rotate-1 group-hover:brightness-110" />
-                        </div>
-                        <div class="flex flex-col flex-grow justify-between px-3 py-2 sm:px-5 sm:py-5 bg-transparent font-sans">
-                            <h3 class="text-base sm:text-lg md:text-xl font-bold text-white mb-1 group-hover:text-cyan-400 group-hover:scale-105 transition-all font-playfair leading-tight">Sample 2</h3>
-                            <p class="text-xs sm:text-sm text-slate-300 mb-2 group-hover:text-indigo-100 transition-colors duration-200 truncate">this item is a sample</p>
-                            <div class="flex justify-between items-center mt-auto">
-                                <span class="text-lg sm:text-xl font-bold text-[#43ffae] group-hover:text-[#3be0d0] transition-colors">$999</span>
-                                <span class="card-btn bg-[#111] border border-cyan-700 text-cyan-400 px-3 py-1 rounded-full text-xs sm:text-sm font-medium shadow transition-all group-hover:bg-cyan-500 group-hover:text-[#fff]">View Details</span>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="items/item3.html" class="group product-card rounded-xl sm:rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl focus-visible:outline-fuchsia-400 transition-all duration-300 transform hover:-translate-y-2 hover:scale-105 will-change-transform animate-fade-in product-item flex flex-col"
-                        data-category="1" data-name="Sample 3" style="animation-delay:.15s; min-width:0;">
-                        <div class="w-full aspect-[4/3] overflow-hidden bg-[#090912] border-b-[1.2px] border-[#222143] flex-shrink-0">
-                            <img src="https://images.unsplash.com/photo-1745874864678-f464940bb513?q=80&amp;w=2070&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                                 alt="Sample 3"
-                                 class="w-full h-full object-cover transition-transform duration-300 rounded-xl group-hover:scale-110 group-hover:rotate-1 group-hover:brightness-110" />
-                        </div>
-                        <div class="flex flex-col flex-grow justify-between px-3 py-2 sm:px-5 sm:py-5 bg-transparent font-sans">
-                            <h3 class="text-base sm:text-lg md:text-xl font-bold text-white mb-1 group-hover:text-cyan-400 group-hover:scale-105 transition-all font-playfair leading-tight">Sample 3</h3>
-                            <p class="text-xs sm:text-sm text-slate-300 mb-2 group-hover:text-indigo-100 transition-colors duration-200 truncate">this item is a sample</p>
-                            <div class="flex justify-between items-center mt-auto">
-                                <span class="text-lg sm:text-xl font-bold text-[#43ffae] group-hover:text-[#3be0d0] transition-colors">$999</span>
-                                <span class="card-btn bg-[#111] border border-cyan-700 text-cyan-400 px-3 py-1 rounded-full text-xs sm:text-sm font-medium shadow transition-all group-hover:bg-cyan-500 group-hover:text-[#fff]">View Details</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-            <!-- Repeat the grid with the same classes for Category 2 as well, just below. -->
-            <div class="products-category-group" data-category="2">
-                <h4 class="text-2xl font-bold mt-8 mb-4 gradient-text animate-fade-in text-left sm:text-left md:text-left lg:text-center xl:text-center">Category 2</h4>
-                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 md:gap-8 justify-center items-start max-w-full mx-auto">
-                    <a href="items/item4.html" class="group product-card rounded-xl sm:rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl focus-visible:outline-fuchsia-400 transition-all duration-300 transform hover:-translate-y-2 hover:scale-105 will-change-transform animate-fade-in product-item flex flex-col"
-                        data-category="2" data-name="Sample 4" style="animation-delay:.01s; min-width:0;">
-                        <div class="w-full aspect-[4/3] overflow-hidden bg-[#090912] border-b-[1.2px] border-[#222143] flex-shrink-0">
-                            <img src="https://images.unsplash.com/photo-1745874864678-f464940bb513?q=80&amp;w=2070&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                                 alt="Sample 4"
-                                 class="w-full h-full object-cover transition-transform duration-300 rounded-xl group-hover:scale-110 group-hover:rotate-1 group-hover:brightness-110" />
-                        </div>
-                        <div class="flex flex-col flex-grow justify-between px-3 py-2 sm:px-5 sm:py-5 bg-transparent font-sans">
-                            <h3 class="text-base sm:text-lg md:text-xl font-bold text-white mb-1 group-hover:text-cyan-400 group-hover:scale-105 transition-all font-playfair leading-tight">Sample 4</h3>
-                            <p class="text-xs sm:text-sm text-slate-300 mb-2 group-hover:text-indigo-100 transition-colors duration-200 truncate">this item is a sample</p>
-                            <div class="flex justify-between items-center mt-auto">
-                                <span class="text-lg sm:text-xl font-bold text-[#43ffae] group-hover:text-[#3be0d0] transition-colors">$999</span>
-                                <span class="card-btn bg-[#111] border border-cyan-700 text-cyan-400 px-3 py-1 rounded-full text-xs sm:text-sm font-medium shadow transition-all group-hover:bg-cyan-500 group-hover:text-[#fff]">View Details</span>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="items/item5.html" class="group product-card rounded-xl sm:rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl focus-visible:outline-fuchsia-400 transition-all duration-300 transform hover:-translate-y-2 hover:scale-105 will-change-transform animate-fade-in product-item flex flex-col"
-                        data-category="2" data-name="Sample 5" style="animation-delay:.08s; min-width:0;">
-                        <div class="w-full aspect-[4/3] overflow-hidden bg-[#090912] border-b-[1.2px] border-[#222143] flex-shrink-0">
-                            <img src="https://images.unsplash.com/photo-1745874864678-f464940bb513?q=80&amp;w=2070&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.1.0&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                                 alt="Sample 5"
-                                 class="w-full h-full object-cover transition-transform duration-300 rounded-xl group-hover:scale-110 group-hover:rotate-1 group-hover:brightness-110" />
-                        </div>
-                        <div class="flex flex-col flex-grow justify-between px-3 py-2 sm:px-5 sm:py-5 bg-transparent font-sans">
-                            <h3 class="text-base sm:text-lg md:text-xl font-bold text-white mb-1 group-hover:text-cyan-400 group-hover:scale-105 transition-all font-playfair leading-tight">Sample 5</h3>
-                            <p class="text-xs sm:text-sm text-slate-300 mb-2 group-hover:text-indigo-100 transition-colors duration-200 truncate">this item is a sample</p>
-                            <div class="flex justify-between items-center mt-auto">
-                                <span class="text-lg sm:text-xl font-bold text-[#43ffae] group-hover:text-[#3be0d0] transition-colors">$999</span>
-                                <span class="card-btn bg-[#111] border border-cyan-700 text-cyan-400 px-3 py-1 rounded-full text-xs sm:text-sm font-medium shadow transition-all group-hover:bg-cyan-500 group-hover:text-[#fff]">View Details</span>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </div>
-        <!-- End static grid -->
+    <!-- Products Grid (now rendered by JS from public/curated-store.js; no need to hardcode) -->
+    <section id="products" class="container mx-auto px-2 sm:px-4 pb-20 relative z-10">
+        <div id="products-grid"></div>
         <div id="no-results" class="hidden flex flex-col items-center justify-center min-h-[120px] w-full animate-fade-in">
             <svg class="w-14 h-14 mb-2 text-cyan-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 48 48">
               <circle cx="24" cy="24" r="18" stroke="#7f1dff" stroke-width="2.5" fill="none"></circle>
@@ -478,6 +400,26 @@
         .dark .ambient2, .dark-ambient .ambient2 { background: radial-gradient(circle at 80% 48%, #0ea5e998 0%, #9333ea00 76%)!important;}
         .dark .ambient3, .dark-ambient .ambient3 { background: radial-gradient(circle at 80% 120%, #2e1065cc 0%, #00000000 100%)!important;}
         .dark-ambient .ambient1, .dark-ambient .ambient2, .dark-ambient .ambient3 { }
+    </style>
+    <style>
+      /* updated Ambient backgrounds for true dark and bright light mode */
+      .ambient1 { background: radial-gradient(circle at 12% 22%, #a5ceff2e 0%, #ffffff00 80%)!important; }
+      .ambient2 { background: radial-gradient(circle at 80% 48%, #bff2fe55 0%, #ffd6fc00 76%)!important; }
+      .ambient3 { background: radial-gradient(circle at 80% 120%, #e1f0fa86 0%, #fff0 100%)!important; }
+      body.light, .light { background: #fff !important; color: #222 !important;}
+      .light .ambient1, body.light .ambient1 { background: radial-gradient(circle at 12% 22%, #a5ceff2e 0%, #ffffff00 80%)!important;}
+      .light .ambient2, body.light .ambient2 { background: radial-gradient(circle at 80% 48%, #bff2fe6b 0%, #ffd6fc00 76%)!important;}
+      .light .ambient3, body.light .ambient3 { background: radial-gradient(circle at 80% 120%, #e1f0fa86 0%, #fff0 100%)!important;}
+
+      /* TRUE NIGHT mode: rich darks and cool neon glows */
+      body.dark, .dark {
+        background: #09091a !important;
+        color: #fafcff !important;
+      }
+      .dark .ambient1, body.dark .ambient1 { background: radial-gradient(circle at 12% 22%, #1e00364d 0%, #05081600 85%)!important;}
+      .dark .ambient2, body.dark .ambient2 { background: radial-gradient(circle at 80% 48%, #2fd3e9b8 0%, #1e1b4b00 80%)!important;}
+      .dark .ambient3, body.dark .ambient3 { background: radial-gradient(circle at 80% 120%, #5113a755 0%, #00000000 100%)!important;}
+      body.dark, .dark { background: #09091a !important; color: #fafcff !important;}
     </style>
 </body>
 </html>
