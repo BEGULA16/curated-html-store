@@ -1,24 +1,190 @@
+
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>curated-html-store</title>
-    <meta name="description" content="Lovable Generated Project" />
-    <meta name="author" content="Lovable" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curated Store</title>
+    <meta name="description" content="Premium Quality Products" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(to right, #2563eb, #9333ea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hover-scale:hover {
+            transform: translateY(-8px);
+        }
+        .hover-scale img:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+    <!-- Header -->
+    <header class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-6">
+            <h1 class="text-4xl font-bold text-center gradient-text">
+                Curated Store
+            </h1>
+            <p class="text-center text-gray-600 mt-2">Premium Quality Products</p>
+        </div>
+    </header>
 
-    <meta property="og:title" content="curated-html-store" />
-    <meta property="og:description" content="Lovable Generated Project" />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <!-- Hero Section -->
+    <section class="container mx-auto px-4 py-12 text-center">
+        <h2 class="text-3xl md:text-5xl font-bold text-gray-800 mb-6">
+            Discover Amazing Products
+        </h2>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto mb-8">
+            Carefully curated items that meet our highest standards of quality and design
+        </p>
+    </section>
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@lovable_dev" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-  </head>
+    <!-- Products Grid -->
+    <section class="container mx-auto px-4 pb-16">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            <!-- Item 1 -->
+            <a href="items/item1.html" class="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover-scale">
+                <div class="aspect-square overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1745874864678-f464940bb513?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                         alt="Sample" 
+                         class="w-full h-full object-cover transition-transform duration-300">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors">
+                        Sample
+                    </h3>
+                    <p class="text-gray-600 mb-4 line-clamp-2">
+                        this item is a sample
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-2xl font-bold text-green-600">
+                            $999
+                        </span>
+                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                            View Details
+                        </span>
+                    </div>
+                </div>
+            </a>
 
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+            <!-- Item 2 -->
+            <a href="items/item2.html" class="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover-scale">
+                <div class="aspect-square overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1745874864678-f464940bb513?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                         alt="Sample" 
+                         class="w-full h-full object-cover transition-transform duration-300">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors">
+                        Sample
+                    </h3>
+                    <p class="text-gray-600 mb-4 line-clamp-2">
+                        this item is a sample
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-2xl font-bold text-green-600">
+                            $999
+                        </span>
+                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                            View Details
+                        </span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Item 3 -->
+            <a href="items/item3.html" class="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover-scale">
+                <div class="aspect-square overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1745874864678-f464940bb513?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                         alt="Sample" 
+                         class="w-full h-full object-cover transition-transform duration-300">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors">
+                        Sample
+                    </h3>
+                    <p class="text-gray-600 mb-4 line-clamp-2">
+                        this item is a sample
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-2xl font-bold text-green-600">
+                            $999
+                        </span>
+                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                            View Details
+                        </span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Item 4 -->
+            <a href="items/item4.html" class="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover-scale">
+                <div class="aspect-square overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1745874864678-f464940bb513?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                         alt="Sample" 
+                         class="w-full h-full object-cover transition-transform duration-300">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors">
+                        Sample
+                    </h3>
+                    <p class="text-gray-600 mb-4 line-clamp-2">
+                        this item is a sample
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-2xl font-bold text-green-600">
+                            $999
+                        </span>
+                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                            View Details
+                        </span>
+                    </div>
+                </div>
+            </a>
+
+            <!-- Item 5 -->
+            <a href="items/item5.html" class="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 hover-scale">
+                <div class="aspect-square overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1745874864678-f464940bb513?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                         alt="Sample" 
+                         class="w-full h-full object-cover transition-transform duration-300">
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold text-gray-800 mb-2 group-hover:text-blue-600 transition-colors">
+                        Sample
+                    </h3>
+                    <p class="text-gray-600 mb-4 line-clamp-2">
+                        this item is a sample
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-2xl font-bold text-green-600">
+                            $999
+                        </span>
+                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                            View Details
+                        </span>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4 text-center">
+            <h3 class="text-2xl font-bold mb-4">Curated Store</h3>
+            <p class="text-gray-400 mb-6">Your trusted source for premium products</p>
+            <div class="flex justify-center space-x-6 mb-6">
+                <a href="#" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a>
+                <a href="#" class="text-gray-400 hover:text-white transition-colors">Terms of Service</a>
+                <a href="#" class="text-gray-400 hover:text-white transition-colors">Contact Us</a>
+            </div>
+            <p class="text-gray-500 text-sm">© 2024 Curated Store. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
 </html>
