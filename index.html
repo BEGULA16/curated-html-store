@@ -145,6 +145,16 @@
                     overlay.classList.add('opacity-100');
                     overlay.classList.add('pointer-events-auto');
                     body.style.overflow = "hidden";
+                    // Every time menu is shown, re-attach close handler
+                    var closeBtnDynamic = document.getElementById('mobile-navbar-simple-close');
+                    if (closeBtnDynamic) {
+                        closeBtnDynamic.onclick = hideMenu;
+                    }
+                    // Close menu on clicking any link
+                    var menuLinks = menu.querySelectorAll('a');
+                    menuLinks.forEach(function(link){
+                        link.onclick = hideMenu;
+                    });
                 }
                 function hideMenu() {
                     menu.classList.add('hidden');
@@ -155,9 +165,6 @@
                 }
                 if (menuBtn) {
                     menuBtn.onclick = showMenu;
-                }
-                if (closeBtn) {
-                    closeBtn.onclick = hideMenu;
                 }
                 // Esc closes
                 document.addEventListener('keydown', function(e) {
