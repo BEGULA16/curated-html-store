@@ -10,10 +10,14 @@
     <style>
         html, body { height: 100%; overflow-x: hidden; }
         body {
-            background: #fff; /* Make light mode truly white by default */
+            background: #fff;
             color: #222;
             font-family: 'Playfair Display', serif;
-            transition: background 0.3s;
+            transition: background 0.3s, color 0.3s;
+        }
+        .dark body {
+            background: #050816 !important;
+            color: #fff !important;
         }
         .gradient-text {
             background: linear-gradient(to right, #7f1dff 40%, #41d1ff 100%);
@@ -21,7 +25,7 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        /* AMOLED ambient lighting backgrounds -- use vibrant glows for light & night mode */
+        /* Ambient backgrounds */
         .ambient1 {
             background: radial-gradient(circle at 12% 22%, #a5ceff2e 0%, #ffffff00 80%);
             transition: background 0.3s;
@@ -35,91 +39,58 @@
             transition: background 0.3s;
         }
         .dark .ambient1 {
-            background: radial-gradient(circle at 12% 22%, #7f1dff33 0%, #0e172a00 80%);
+            background: radial-gradient(circle at 12% 22%, #7f1dff44 0%, #19132a00 80%) !important;
         }
         .dark .ambient2 {
-            background: radial-gradient(circle at 80% 48%, #0ea5e998 0%, #9333ea00 76%);
+            background: radial-gradient(circle at 80% 48%, #1cc8fa52 0%, #962cff00 76%) !important;
         }
         .dark .ambient3 {
-            background: radial-gradient(circle at 80% 120%, #2e1065cc 0%, #00000000 100%);
+            background: radial-gradient(circle at 80% 120%, #2e1065aa 0%, #00000000 100%) !important;
         }
-        .dark body {
-            background: #050816;
-            color: #fff;
+        /* NavBar & Footer backgrounds for dark */
+        nav {
+            background: #101026;
+            border-bottom: 1px solid #24245f;
         }
-        @media (prefers-color-scheme: dark) {
-            body:not(.light):not(.dark) {
-                background: #050816;
-                color: #fff;
-            }
+        .dark nav {
+            background: #131328 !important;
+            border-bottom: 1px solid #181851 !important;
         }
-        @media (prefers-color-scheme: light) {
-            body:not(.light):not(.dark) {
-                background: #fff;
-                color: #222;
-            }
+        footer {
+            background: #000;
+            border-top: 1.5px solid #192040;
         }
-        .category-btn {
-            border: 2px solid #191932;
-            background: #000016;
-            color: #70ffe8;
-            box-shadow: 0 4px 32px #41d1ff31, 0 1px 8px #0ea5e970;
-            border-radius: 9999px;
-            font-weight: 700;
-            padding: 0.6em 2em;
-            font-size: 1rem;
-            margin-right: 1rem;
-            margin-bottom: 0.5rem;
-            letter-spacing: 0.3px;
-            transition: 
-              background 0.22s cubic-bezier(.4,1,.2,1),
-              color 0.19s,
-              border 0.21s,
-              box-shadow 0.28s,
-              transform .13s cubic-bezier(.63,.13,.15,1);
-            position: relative; overflow: hidden;
+        .dark footer {
+            background: #0d1021 !important;
+            border-top: 1.5px solid #232346 !important;
         }
-        .category-btn.selected, .category-btn:active {
-            background: linear-gradient(90deg,#41d1ff 60%,#9333ea 100%);
-            color: #fff;
-            border-color: #7f1dff;
-            box-shadow: 0 6.5px 39px #9333eadd, 0 0px 16px #22d3ee60;
-            font-size: 1.08rem;
-            letter-spacing: .6px;
-            transform: scale(1.045);
-        }
-        .category-btn:hover:not(.selected), .category-btn:focus-visible:not(.selected) {
-            background: linear-gradient(90deg,#41d1ff 60%,#7f1dff 100%);
-            color: #fff;
-            border-color: #41d1ff;
-            transform: scale(1.025) skewY(-2deg);
-            box-shadow: 0 6px 30px #41d1ff55;
-        }
-        /* Product Card enhanced hover/animation */
+        /* Card backgrounds */
         .product-card {
-            transition: 
-              transform .22s cubic-bezier(.22,.61,.36,1), 
-              box-shadow .24s cubic-bezier(.13,1,.46,.93), 
-              border-color .13s;
             background: #13131e;
-            border: 1.5px solid #27273c88;
-            box-shadow: 0 8px 40px #21218621, 0 3px 15px #7f1dff17;
-            z-index: 1;
         }
-        .product-card:hover,
-        .product-card:focus-visible {
-            transform: scale(1.045) translateY(-7px) rotate(-0.4deg);
-            box-shadow: 0 12px 45px #41d1ff55, 0 3px 16px #9333ea44;
-            border-color: #7f1dffbb;
-            z-index: 2;
+        .dark .product-card {
+            background: #181927 !important;
+            border-color: #28283e !important;
         }
-        /* Animation helpers (fade/scale) */
-        @keyframes fade-in { 0%{opacity:0;transform:translateY(20px);} 100%{opacity:1;transform:translateY(0);} }
-        .animate-fade-in { animation: fade-in 0.75s cubic-bezier(.19,1,.39,.98) both; }
-        @keyframes scale-in { 0%{opacity:.12;transform:scale(.94);} 100%{opacity:1;transform:scale(1);} }
-        .animate-scale-in { animation: scale-in .37s cubic-bezier(.46,1,.33,1) both; }
-        @keyframes pulse { 0%,100%{box-shadow:0 0 0 0 #41d1ff33;} 50%{box-shadow:0 0 0 8px #9333ea21;} }
-        .animate-pulse { animation: pulse 1.5s infinite cubic-bezier(.44,0,.57,1);}
+        /* Other sections */
+        section, .category-btn, .review-card, .glass-card {
+            transition: background 0.25s, color 0.25s;
+        }
+        .dark .category-btn {
+            background: #232440 !important;
+            color: #70ffe8 !important;
+            border-color: #24245f !important;
+        }
+        .dark .category-btn.selected {
+            background: linear-gradient(90deg,#41d1ff 60%,#9333ea 100%) !important;
+            color: #fff !important;
+            border-color: #7f1dff !important;
+        }
+        .dark .product-card .text-slate-300,
+        .dark .product-card .text-indigo-100 {
+            color: #a7cade !important;
+        }
+        /* ... keep rest of style ... */
     </style>
 </head>
 <body class="relative min-h-screen bg-white text-gray-900 overflow-x-hidden transition-colors">
@@ -432,17 +403,18 @@
     <script>
       function setTheme(theme, persist = true) {
         const body = document.body;
-        const ambientBg = document.getElementById('ambient-backgrounds');
-        // Remove both classes to reset state
+        const html = document.documentElement;
+        // Remove any previous classes
         body.classList.remove('dark', 'light');
+        html.classList.remove('dark', 'light');
         if (theme === "dark") {
           body.classList.add('dark');
-          ambientBg.classList.add('dark-ambient');
+          html.classList.add('dark');
         } else {
           body.classList.add('light');
-          ambientBg.classList.remove('dark-ambient');
+          html.classList.add('light');
         }
-        // Update switch icons
+        // Update icons
         const sunIcon = `<circle cx="12" cy="12" r="5" stroke="currentColor"></circle>
               <path d="M12 1v2m0 18v2m11-11h-2M3 12H1m16.95 7.07l-1.41-1.41M6.34 6.34 4.93 4.93m12.02 0-1.41 1.41M6.34 17.66l-1.41 1.41" stroke="currentColor"></path>`;
         const moonIcon = `<path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"></path>`;

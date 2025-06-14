@@ -10,9 +10,14 @@
     <style>
         html, body { height: 100%; overflow-x: hidden; }
         body {
-            background: #000;
-            color: #fff;
+            background: #fff;
+            color: #222;
             font-family: 'Playfair Display', serif;
+            transition: background 0.3s, color 0.3s;
+        }
+        .dark body {
+            background: #050816 !important;
+            color: #fff !important;
         }
         .gradient-text {
             background: linear-gradient(to right, #7f1dff 40%, #41d1ff 100%);
@@ -21,13 +26,85 @@
             background-clip: text;
         }
         .ambient1 {
-            background: radial-gradient(circle at 12% 22%, #7f1dff22 0%, #0e172a00 80%);
+            background: radial-gradient(circle at 12% 22%, #a5ceff2e 0%, #ffffff00 80%);
+            transition: background 0.3s;
         }
         .ambient2 {
-            background: radial-gradient(circle at 80% 48%, #0ea5e960 0%, #9333ea00 76%);
+            background: radial-gradient(circle at 80% 48%, #bff2fe6b 0%, #ffd6fc00 76%);
+            transition: background 0.3s;
         }
         .ambient3 {
-            background: radial-gradient(circle at 80% 120%, #2e1065aa 0%, #00000000 100%);
+            background: radial-gradient(circle at 80% 120%, #e1f0fa86 0%, #fff0 100%);
+            transition: background 0.3s;
+        }
+        .dark .ambient1 {
+            background: radial-gradient(circle at 12% 22%, #7f1dff44 0%, #19132a00 80%) !important;
+        }
+        .dark .ambient2 {
+            background: radial-gradient(circle at 80% 48%, #1cc8fa52 0%, #962cff00 76%) !important;
+        }
+        .dark .ambient3 {
+            background: radial-gradient(circle at 80% 120%, #2e1065aa 0%, #00000000 100%) !important;
+        }
+        nav {
+            background: #101026;
+            border-bottom: 1px solid #24245f;
+        }
+        .dark nav {
+            background: #131328 !important;
+            border-bottom: 1px solid #181851 !important;
+        }
+        footer {
+            background: #000;
+            border-top: 1.5px solid #192040;
+        }
+        .dark footer {
+            background: #0d1021 !important;
+            border-top: 1.5px solid #232346 !important;
+        }
+        .glass-card {
+            background: linear-gradient(135deg, #18182b44 80%, #2e254d13 100%);
+            border: 1.5px solid #22214366;
+            box-shadow: 0 8px 40px #14134628, 0 3px 15px #7f1dff18;
+        }
+        .dark .glass-card {
+            background: linear-gradient(135deg, #20203888 80%, #39177c22 100%) !important;
+            border: 1.5px solid #14114680 !important;
+        }
+        .review-card {
+            background: linear-gradient(120deg, #15151e7c 95%, #02020221 100%);
+            border: 1.5px solid #23223c55;
+        }
+        .dark .review-card {
+            background: linear-gradient(120deg, #1d1e2aaf 90%, #02020240 100%) !important;
+            border: 1.5px solid #20204699 !important;
+        }
+        .btn-gradient {
+            background: linear-gradient(90deg, #298cff 60%, #963cff 100%);
+            color: #fff;
+            box-shadow: 0 0 8px #41d1ff48;
+        }
+        .dark .btn-gradient {
+            background: linear-gradient(90deg, #226fc9 60%, #691eb2 100%) !important;
+            color: #fff;
+        }
+        .dark .bg-[#181927] {
+            background: #181927 !important;
+        }
+        .dark .bg-[#1e1d2d] {
+            background: #1a1b23 !important;
+        }
+        .dark .bg-[#101026] {
+            background: #181927 !important;
+        }
+        .dark .text-white {
+            color: #fff !important;
+        }
+        .dark .text-cyan-200\/85, .dark .text-cyan-100\/80 {
+            color: #bbf7fe !important;
+        }
+        .dark .text-gray-400, .dark .text-gray-500, .dark .text-xs {
+            color: #9ca3af !important;
         }
         @keyframes fade-in {
             0%{opacity:0;transform:translateY(18px);}
@@ -83,7 +160,7 @@
         }
     </style>
 </head>
-<body class="relative min-h-screen bg-black text-white overflow-x-hidden">
+<body class="relative min-h-screen bg-white text-white overflow-x-hidden">
 
     <!-- Ambient glowing backgrounds for AMOLED/dark and now for light mode -->
     <div class="fixed top-0 left-0 w-full h-full z-0 pointer-events-none" id="ambient-backgrounds">
@@ -312,25 +389,25 @@
     </script>
     <script>
         // THEME SWITCHER LOGIC
-        function setAmbientLightTheme(theme) {
-          if (theme === "light") {
-            document.getElementById('ambient-backgrounds').classList.remove('dark-ambient');
-          } else {
-            document.getElementById('ambient-backgrounds').classList.add('dark-ambient');
-          }
-        }
         function setTheme(theme, persist=true) {
+            const html = document.documentElement;
+            const body = document.body;
+            html.classList.remove('dark', 'light');
+            body.classList.remove('dark', 'light');
             if (theme === "dark") {
-              document.body.classList.add("dark");
+                body.classList.add("dark");
+                html.classList.add("dark");
             } else {
-              document.body.classList.remove("dark");
+                body.classList.add("light");
+                html.classList.add("light");
             }
-            setAmbientLightTheme(theme);
-            // Swap icons:
+            // Swap icons
             const sunIcon = `<circle cx="12" cy="12" r="5" stroke="currentColor"></circle><path d="M12 1v2m0 18v2m11-11h-2M3 12H1m16.95 7.07l-1.41-1.41M6.34 6.34 4.93 4.93m12.02 0-1.41 1.41M6.34 17.66l-1.41 1.41" stroke="currentColor"></path>`;
             const moonIcon = `<path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"></path>`;
-            document.getElementById('theme-switch-mobile-icon').innerHTML = theme === "dark" ? moonIcon : sunIcon;
-            document.getElementById('theme-switch-desktop-icon').innerHTML = theme === "dark" ? moonIcon : sunIcon;
+            const mobileIcon = document.getElementById('theme-switch-mobile-icon');
+            const desktopIcon = document.getElementById('theme-switch-desktop-icon');
+            if (mobileIcon) mobileIcon.innerHTML = theme === "dark" ? moonIcon : sunIcon;
+            if (desktopIcon) desktopIcon.innerHTML = theme === "dark" ? moonIcon : sunIcon;
             if (persist) localStorage.setItem('curated-theme', theme);
         }
         function getPreferredTheme() {
@@ -339,8 +416,8 @@
             return window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark" : "light";
         }
         function toggleTheme() {
-            const current = document.body.classList.contains("dark") ? "dark" : "light";
-            setTheme(current === "dark" ? "light" : "dark");
+            const isDark = document.body.classList.contains("dark");
+            setTheme(isDark ? "light" : "dark");
         }
         document.addEventListener("DOMContentLoaded", function(){
             setTheme(getPreferredTheme(), false);
@@ -349,16 +426,12 @@
         });
     </script>
     <style>
-        .ambient1 { background: radial-gradient(circle at 12% 22%, #7f1dff22 0%, #0e172a00 80%);}
-        .ambient2 { background: radial-gradient(circle at 80% 48%, #0ea5e960 0%, #9333ea00 76%);}
-        .ambient3 { background: radial-gradient(circle at 80% 120%, #2e1065aa 0%, #00000000 100%);}
-        .dark .ambient1 { background: radial-gradient(circle at 12% 22%, #7f1dff22 0%, #0e172a00 80%);}
-        .dark .ambient2 { background: radial-gradient(circle at 80% 48%, #0ea5e960 0%, #9333ea00 76%);}
-        .dark .ambient3 { background: radial-gradient(circle at 80% 120%, #2e1065aa 0%, #00000000 100%);}
-        .ambient1:not(.dark-ambient){ background: radial-gradient(circle at 12% 22%, #aaccff33 0%, #ffffff00 80%)!important;}
-        .ambient2:not(.dark-ambient){ background: radial-gradient(circle at 80% 48%, #83eaff69 0%, #ffd6fc00 76%)!important;}
-        .ambient3:not(.dark-ambient){ background: radial-gradient(circle at 80% 120%, #d6e6fa55 0%, #fff0 100%)!important;}
-        .dark-ambient .ambient1, .dark-ambient .ambient2, .dark-ambient .ambient3 { /* no override, use dark */}
+        .ambient1 { background: radial-gradient(circle at 12% 22%, #a5ceff2e 0%, #ffffff00 80%)!important; }
+        .ambient2 { background: radial-gradient(circle at 80% 48%, #bff2fe6b 0%, #ffd6fc00 76%)!important; }
+        .ambient3 { background: radial-gradient(circle at 80% 120%, #e1f0fa86 0%, #fff0 100%)!important; }
+        .dark .ambient1 { background: radial-gradient(circle at 12% 22%, #7f1dff44 0%, #19132a00 80%)!important;}
+        .dark .ambient2 { background: radial-gradient(circle at 80% 48%, #1cc8fa52 0%, #962cff00 76%)!important;}
+        .dark .ambient3 { background: radial-gradient(circle at 80% 120%, #2e1065aa 0%, #00000000 100%)!important;}
     </style>
 </body>
 </html>
