@@ -93,7 +93,7 @@
         .animate-pulse { animation: pulse 1.5s infinite cubic-bezier(.44,0,.57,1);}
     </style>
 </head>
-<body class="relative min-h-screen bg-black text-white overflow-x-hidden">
+<body class="relative min-h-screen bg-black text-white overflow-x-hidden transition-colors">
     <!-- Ambient glowing backgrounds for AMOLED/dark and now for light mode -->
     <div class="fixed top-0 left-0 w-full h-full z-0 pointer-events-none" id="ambient-backgrounds">
         <div class="absolute w-2/3 h-1/3 left-0 top-0 ambient1"></div>
@@ -101,19 +101,17 @@
         <div class="absolute w-1/2 h-2/5 right-0 bottom-[-15%] ambient3"></div>
     </div>
 
-    <!-- Overlay for Mobile Dropbox Navigation (initially hidden) -->
-    <div id="mobile-navbar-dropbox-overlay" class="fixed inset-0 z-[100] bg-black/50 pointer-events-none transition-opacity duration-200 opacity-0" style="backdrop-filter: blur(1.5px);"></div>
-
-    <!-- Navigation Bar START (from items/item1.html for maximum compatibility) -->
-    <nav class="flex items-center justify-between bg-[#101026] shadow-lg px-4 py-4 rounded-b-2xl relative z-50" style="border-bottom: 1px solid #24245f;">
+    <!-- Navigation Bar START -->
+    <nav class="flex items-center justify-between bg-[#101026] shadow-lg px-4 py-4 rounded-b-2xl sticky top-0 z-[1000]" style="border-bottom: 1px solid #24245f;">
         <span class="font-playfair text-2xl md:text-3xl font-extrabold gradient-text drop-shadow-sm select-none tracking-tight animate-fade-in">
             Curated Store - 7v
         </span>
-        <!-- Mobile Nav & Switch: Slide-down Overlay -->
+        <!-- Mobile Nav & Switch -->
         <div class="md:hidden flex items-center relative ml-auto z-[101]">
-            <button id="theme-switch-mobile" class="mr-2 flex items-center justify-center text-cyan-400 hover:text-fuchsia-400 focus:outline-none p-2 rounded-full transition" aria-label="Switch color mode">
+            <!-- THEME SWITCH BUTTON (MOBILE, functional) -->
+            <button id="theme-switch-mobile" 
+                class="mr-2 flex items-center justify-center text-cyan-400 hover:text-fuchsia-400 focus:outline-none p-2 rounded-full transition" aria-label="Switch color mode" type="button">
                 <svg id="theme-switch-mobile-icon" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2">
-                    <!-- default icon: sun, will be swapped in JS -->
                     <circle cx="12" cy="12" r="5" stroke="currentColor"></circle>
                     <path d="M12 1v2m0 18v2m11-11h-2M3 12H1m16.95 7.07l-1.41-1.41M6.34 6.34 4.93 4.93m12.02 0-1.41 1.41M6.34 17.66l-1.41 1.41" stroke="currentColor"></path>
                 </svg>
@@ -131,12 +129,14 @@
                 <a href="mailto:info@curatedstore.com" class="block px-8 py-5 font-bold text-2xl bg-gradient-to-r from-fuchsia-300 to-cyan-400 text-white hover:text-white transition rounded-lg w-full text-center">Contact Us</a>
             </div>
         </div>
-        <!-- Desktop nav links and switch -->
+        <!-- Desktop nav links & switch -->
         <div id="navbar-links" class="hidden md:flex gap-7 items-center text-lg font-medium navbar-links">
             <a href="/" class="text-white/90 hover:gradient-text px-1.5 py-0.5 transition-all relative font-medium active:gradient-text font-bold">Home</a>
             <a href="#products" class="text-white/80 hover:gradient-text px-1.5 py-0.5 transition-all relative font-medium">Products</a>
             <a href="mailto:info@curatedstore.com" class="bg-gradient-to-r from-blue-600 to-fuchsia-600 text-white font-semibold rounded-full shadow-2xl px-5 py-2 text-base transition-transform hover:scale-105 focus-visible:ring-2 ring-fuchsia-300 ml-3">Contact Us</a>
-            <button id="theme-switch-desktop" class="flex items-center justify-center text-cyan-400 hover:text-fuchsia-400 focus:outline-none p-2 rounded-full transition ml-2" aria-label="Switch color mode">
+            <!-- THEME SWITCH BUTTON (DESKTOP, functional) -->
+            <button id="theme-switch-desktop" 
+                class="flex items-center justify-center text-cyan-400 hover:text-fuchsia-400 focus:outline-none p-2 rounded-full transition ml-2" aria-label="Switch color mode" type="button">
                 <svg id="theme-switch-desktop-icon" class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="12" cy="12" r="5" stroke="currentColor"></circle>
                     <path d="M12 1v2m0 18v2m11-11h-2M3 12H1m16.95 7.07l-1.41-1.41M6.34 6.34 4.93 4.93m12.02 0-1.41 1.41M6.34 17.66l-1.41 1.41" stroke="currentColor"></path>
@@ -399,61 +399,69 @@
     })();
     </script>
 
-    <!-- THEME SWITCHER LOGIC -->
-    <!-- ---- Ambient for light mode: swap class when theme changes --- -->
-    function setAmbientLightTheme(theme) {
-      if (theme === "light") {
-        document.getElementById('ambient-backgrounds').classList.remove('dark-ambient');
-      } else {
-        document.getElementById('ambient-backgrounds').classList.add('dark-ambient');
-      }
-    }
-    <!-- ---- Theme toggle code ---- -->
-    function setTheme(theme, persist=true) {
-      if (theme === "dark") {
-        document.body.classList.add("dark");
-      } else {
-        document.body.classList.remove("dark");
-      }
-      setAmbientLightTheme(theme);
-      // Swap icons:
-      const sunIcon = `<circle cx="12" cy="12" r="5" stroke="currentColor"></circle><path d="M12 1v2m0 18v2m11-11h-2M3 12H1m16.95 7.07l-1.41-1.41M6.34 6.34 4.93 4.93m12.02 0-1.41 1.41M6.34 17.66l-1.41 1.41" stroke="currentColor"></path>`;
-      const moonIcon = `<path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"></path>`;
-      document.getElementById('theme-switch-mobile-icon').innerHTML = theme === "dark" ? moonIcon : sunIcon;
-      document.getElementById('theme-switch-desktop-icon').innerHTML = theme === "dark" ? moonIcon : sunIcon;
-      if (persist) localStorage.setItem('curated-theme', theme);
-    }
-    function getPreferredTheme() {
-      const stored = localStorage.getItem('curated-theme');
-      if (stored) return stored;
-      return window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark" : "light";
-    }
-    function toggleTheme() {
-      const current = document.body.classList.contains("dark") ? "dark" : "light";
-      setTheme(current === "dark" ? "light" : "dark");
-    }
-    // Attach event handlers
-    document.addEventListener("DOMContentLoaded", function(){
-      setTheme(getPreferredTheme(), false);
-      // update icons
-      document.getElementById('theme-switch-mobile').onclick = toggleTheme;
-      document.getElementById('theme-switch-desktop').onclick = toggleTheme;
-    });
+    <!-- THEME SWITCHER & AMBIENT LIGHT LOGIC -->
+    <script>
+        // Set or remove dark classes to body and ambient backgrounds
+        function setAmbientLightTheme(theme) {
+            var ambientBg = document.getElementById('ambient-backgrounds');
+            if (!ambientBg) return;
+            if (theme === "light") {
+                ambientBg.classList.remove('dark-ambient');
+            } else {
+                ambientBg.classList.add('dark-ambient');
+            }
+        }
+        function setTheme(theme, persist = true) {
+            if (theme === "dark") {
+                document.body.classList.add("dark");
+                document.body.classList.remove("bg-white");
+                document.body.classList.add("bg-black");
+            } else {
+                document.body.classList.remove("dark");
+                document.body.classList.remove("bg-black");
+                document.body.classList.add("bg-white");
+            }
+            setAmbientLightTheme(theme);
+
+            // Animated icon (Sun/Moon)
+            const sunIcon = `<circle cx="12" cy="12" r="5" stroke="currentColor"></circle>
+                <path d="M12 1v2m0 18v2m11-11h-2M3 12H1m16.95 7.07l-1.41-1.41M6.34 6.34 4.93 4.93m12.02 0-1.41 1.41M6.34 17.66l-1.41 1.41" stroke="currentColor"></path>`;
+            const moonIcon = `<path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"></path>`;
+            document.getElementById('theme-switch-mobile-icon').innerHTML = theme === "dark" ? moonIcon : sunIcon;
+            document.getElementById('theme-switch-desktop-icon').innerHTML = theme === "dark" ? moonIcon : sunIcon;
+            if (persist) localStorage.setItem('curated-theme', theme);
+        }
+        function getPreferredTheme() {
+            // Saved choice > browser preference > default light
+            const stored = localStorage.getItem('curated-theme');
+            if (stored === "dark" || stored === "light") return stored;
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) return "dark";
+            return "light";
+        }
+        function toggleTheme() {
+            const current = document.body.classList.contains("dark") ? "dark" : "light";
+            setTheme(current === "dark" ? "light" : "dark");
+        }
+        // Setup on DOM load
+        document.addEventListener("DOMContentLoaded", function(){
+            setTheme(getPreferredTheme(), false);
+            document.getElementById('theme-switch-mobile').onclick = toggleTheme;
+            document.getElementById('theme-switch-desktop').onclick = toggleTheme;
+        });
     </script>
     <style>
-        /* Light and dark ambient backgrounds */
+        /* Light and dark ambient backgrounds -- matches both modes */
         .ambient1 { background: radial-gradient(circle at 12% 22%, #7f1dff22 0%, #0e172a00 80%);}
         .ambient2 { background: radial-gradient(circle at 80% 48%, #0ea5e960 0%, #9333ea00 76%);}
         .ambient3 { background: radial-gradient(circle at 80% 120%, #2e1065aa 0%, #00000000 100%);}
         .dark .ambient1 { background: radial-gradient(circle at 12% 22%, #7f1dff22 0%, #0e172a00 80%);}
         .dark .ambient2 { background: radial-gradient(circle at 80% 48%, #0ea5e960 0%, #9333ea00 76%);}
         .dark .ambient3 { background: radial-gradient(circle at 80% 120%, #2e1065aa 0%, #00000000 100%);}
-        /* When in light mode, overlay softer luminous tints */
-        .ambient1:not(.dark-ambient){ background: radial-gradient(circle at 12% 22%, #aaccff33 0%, #ffffff00 80%)!important;}
-        .ambient2:not(.dark-ambient){ background: radial-gradient(circle at 80% 48%, #83eaff69 0%, #ffd6fc00 76%)!important;}
-        .ambient3:not(.dark-ambient){ background: radial-gradient(circle at 80% 120%, #d6e6fa55 0%, #fff0 100%)!important;}
-        .dark-ambient .ambient1, .dark-ambient .ambient2, .dark-ambient .ambient3 { /* no override, use dark */}
+        /* Ambient in light mode overlays gentle tints for glow */
+        .ambient1:not(.dark-ambient) { background: radial-gradient(circle at 12% 22%, #aaccff33 0%, #ffffff00 80%)!important;}
+        .ambient2:not(.dark-ambient) { background: radial-gradient(circle at 80% 48%, #83eaff69 0%, #ffd6fc00 76%)!important;}
+        .ambient3:not(.dark-ambient) { background: radial-gradient(circle at 80% 120%, #d6e6fa55 0%, #fff0 100%)!important;}
+        .dark-ambient .ambient1, .dark-ambient .ambient2, .dark-ambient .ambient3 { }
     </style>
-
 </body>
 </html>
