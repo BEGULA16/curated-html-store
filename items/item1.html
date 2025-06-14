@@ -216,6 +216,11 @@
     <section id="reviews" class="container mx-auto px-4 pb-16 relative z-10">
         <div class="max-w-5xl mx-auto review-card rounded-2xl shadow-xl p-8 animate-fade-in">
             <h2 class="text-3xl font-bold text-white mb-8 text-center font-playfair gradient-text">Customer Reviews</h2>
+            <!-- New: Desktop search bar for reviews -->
+            <form autocomplete="off" class="hidden md:flex mb-8 items-center justify-center max-w-lg mx-auto bg-[#181829]/70 rounded-lg border border-[#232347] px-2 py-2 shadow" onsubmit="return false;">
+                <input id="reviews-search-desktop" type="text" placeholder="Search reviews by name or content..." class="flex-1 bg-transparent rounded-md px-4 py-2 text-base text-white font-medium placeholder:text-cyan-200/35 outline-none border-none shadow-none" />
+                <svg class="ml-2 w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </form>
             <div id="reviews-list" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div class="review-card p-6 rounded-xl border border-[#2c2d3f]/60 animate-fade-in" style="animation-delay:.07s" data-reviewer="John D." data-review="Amazing quality! Exactly as described and arrived quickly.">
                     <div class="flex items-center justify-between mb-3">
@@ -286,22 +291,26 @@
         function handleBuyClick() {
             window.open('https://wa.me/1234567890?text=Hi, I am interested in buying the Sample', '_blank');
         }
-        // ADD: Review filter for mobile search input (navbar-search-mobile)
+        // Search/filter reviews from both search bars (desktop + mobile)
         document.addEventListener("DOMContentLoaded", function () {
-            var searchInput = document.getElementById("navbar-search-mobile");
+            var mobileInput = document.getElementById("navbar-search-mobile");
+            var desktopInput = document.getElementById("reviews-search-desktop");
             var reviewsList = document.getElementById("reviews-list");
-            if (searchInput && reviewsList) {
-                searchInput.addEventListener("input", function () {
-                    var q = searchInput.value.trim().toLowerCase();
-                    var cards = reviewsList.querySelectorAll(".review-card");
-                    cards.forEach(function (card) {
-                        var reviewer = card.getAttribute("data-reviewer") || "";
-                        var review = card.getAttribute("data-review") || "";
-                        var match = reviewer.toLowerCase().includes(q) || review.toLowerCase().includes(q);
-                        card.style.display = match ? "" : "none";
-                    });
+            function filterReviews() {
+                var q1 = mobileInput && mobileInput.value ? mobileInput.value.trim().toLowerCase() : "";
+                var q2 = desktopInput && desktopInput.value ? desktopInput.value.trim().toLowerCase() : "";
+                // Use whichever is non-empty, or combine (match if both present)
+                var query = q1 && q2 ? q1 + " " + q2 : (q1 || q2);
+                var cards = reviewsList.querySelectorAll(".review-card");
+                cards.forEach(function (card) {
+                    var reviewer = card.getAttribute("data-reviewer") || "";
+                    var review = card.getAttribute("data-review") || "";
+                    var match = reviewer.toLowerCase().includes(query) || review.toLowerCase().includes(query);
+                    card.style.display = match ? "" : "none";
                 });
             }
+            if (mobileInput) mobileInput.addEventListener("input", filterReviews);
+            if (desktopInput) desktopInput.addEventListener("input", filterReviews);
         });
     </script>
 </body>
